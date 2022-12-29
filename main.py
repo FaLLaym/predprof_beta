@@ -1,10 +1,10 @@
 import requests
 import time
 
-# 4sensor t+h; 1_1 --> 1_4 == t; 2_1 --> 2_4 == h
+# 4sensor t+h; rework soon
 dic = {'t1': '', 't2': '', 't3': '', 't4': '', 'h1': '', 'h2': '', 'h3': '', 'h4': '', 't_av': '', 'h_av': ''}
 
-
+# getting temperature+humidity
 def get_t_h():
     ct = 0
     ch = 0
@@ -18,11 +18,12 @@ def get_t_h():
     dic['h_av'] = '%.2f' % (ch/4)
     print(dic)
 
+# prog init
 while True:
     get_t_h()
     time.sleep(30)
 
-#testing...
+# testing patch...
 # state_value = 1
 # url = 'https://dt.miet.ru/ppo_it/api/fork_drive'
 # data = {"state": state_value}
