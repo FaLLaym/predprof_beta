@@ -52,7 +52,7 @@ def switch_water():
     print(r)
     print(r.content)
 
-
+# switch totalHum; state_value [0, 1]
 def switch_totalHum():
     state_value = 0
     url = ''
