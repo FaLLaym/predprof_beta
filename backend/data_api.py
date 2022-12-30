@@ -2,9 +2,9 @@ import requests
 
 
 # 4sensor t+h; rework soon
-dic = {'t1': '', 't2': '', 't3': '', 't4': '', 'h1': '', 'h2': '', 'h3': '', 'h4': '', 't_av': '', 'h_av': ''}
+tem_hum = {'t1': '', 't2': '', 't3': '', 't4': '', 'h1': '', 'h2': '', 'h3': '', 'h4': '', 't_av': '', 'h_av': ''}
 # 6 hum sensor; rework soon
-hums = {'hum1': '', 'hum2': '', 'hum3': '', 'hum4': '', 'hum5': '', 'hum6': '', 'hum_adv': ''}
+hum = {'hum1': '', 'hum2': '', 'hum3': '', 'hum4': '', 'hum5': '', 'hum6': '', 'hum_adv': ''}
 
 
 # getting temperature+humidity from 4 sensors
@@ -13,13 +13,12 @@ def get_t_h():
     ch = 0
     for i in range(1, 5):
         response_t_h = requests.get(f'https://dt.miet.ru/ppo_it/api/temp_hum/{i}').json()
-        dic[f't{i}'] = response_t_h['temperature']
-        dic[f'h{i}'] = response_t_h['humidity']
+        tem_hum[f't{i}'] = response_t_h['temperature']
+        tem_hum[f'h{i}'] = response_t_h['humidity']
         ct += response_t_h['temperature']
         ch += response_t_h['humidity']
-    dic['t_av'] = '%.2f' % (ct / 4)
-    dic['h_av'] = '%.2f' % (ch / 4)
-    print(dic)
+    tem_hum['t_av'] = '%.2f' % (ct / 4)
+    tem_hum['h_av'] = '%.2f' % (ch / 4)
 
 
 # getting hum from 6 sensors
@@ -27,10 +26,9 @@ def get_hum():
     c = 0
     for i in range(1, 7):
         response_hum = requests.get(f'https://dt.miet.ru/ppo_it/api/hum/{i}').json()
-        hums[f'hum{i}'] = response_hum["humidity"]
+        hum[f'hum{i}'] = response_hum["humidity"]
         c += response_hum["humidity"]
-    hums['hum_adv'] = '%.2f' % (c / 6)
-    print(hums)
+    hum['hum_adv'] = '%.2f' % (c / 6)
 
 
 # switching window by patch; state [0, 1]
