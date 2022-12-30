@@ -1,2 +1,56 @@
 /* There is nothing here now, it will be updated soon! */
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, section, header, footer {
+		margin: 0;
+		padding: 0;
+		border: 0;
+		font-size: 100%;
+		font: inherit;
+		vertical-align: baseline;
+	}
 
+#footer{
+    background: #000;
+	text-align: center;
+	padding: 4rem 0 2rem 0 ;
+}
+#footer a {
+			color: rgba(255, 255, 255, 0.5);
+		}
+#header {
+		background: rgba(0, 0, 0, 0.975);
+		color: #a6a6a6;
+		cursor: default;
+		height: 3.25em;
+		left: 0;
+		line-height: 3.25em;
+		position: fixed;
+		text-align: right;
+		top: 0;
+		width: 100%;
+		z-index: 10001;
+}
+
+#header > .logo {
+	display: inline-block;
+	height: inherit;
+	left: 1.25em;
+	line-height: inherit;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	top: 0;
+}
+
+#header > .logo a {
+		font-size: 1.25em;
+		color: #FFF;
+		text-decoration: none;
+}
+body {
+		background-color: #fff;
+		color: #444;
+	}
+
+a {
+	text-decoration: none;
+}
