@@ -12,3 +12,4 @@ if __name__ == "__main__":
         get_hum()
         draw_graph_humidity()
         time.sleep(30)
+

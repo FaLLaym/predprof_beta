@@ -33,11 +33,12 @@
 
 def draw_graph_humidity():
     import matplotlib.pyplot as plt
-    from data_api import hum
+    from .data_api import hum
     index = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']
     values = [hum[f'hum{x}'] for x in range(1, 7)]
     plt.bar(index, values)
     plt.savefig('hum_graph.png')
 
 
-# Need to be checked, good feature!
+# Good feature, but needs to be reorganized!!!
+# Now it`s not working.
