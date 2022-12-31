@@ -5,7 +5,7 @@ const canvas = document.querySelector(.webgl)
 const scene = new THREE.Scene()
 
 const loader = new GLTFLoader()
-loader.load('assets/wraith.glb', function(glb){
+loader.load('/3d/scene.glb', function(glb){
     console.log(glb)
     const root = glb.scene;
     root.scale.set(1.3, 1.3, 1.3);
