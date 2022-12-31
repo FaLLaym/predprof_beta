@@ -10,7 +10,7 @@ from .data_api import (get_t_h, get_hum)
 def insert_data():
     connection = None
     try:
-        connection = sqlite3.connect(f'../db/humidity.db')
+        connection = sqlite3.connect('db/humidity.db')
         cursorObj = connection.cursor()
         cursorObj.executemany(f"INSERT INTO humidity VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)", (get_hum(),))
         connection.commit()
@@ -18,6 +18,20 @@ def insert_data():
         return 'Good!'
     except Error as ex:
         return ex
+
+def clear_data():
+    try:
+        connection = sqlite3.connect('db/humidity.db')
+        cursor = connection.cursor()
+        sql_delete_query = """DELETE from humidity"""
+        cursor.execute(sql_delete_query)
+        connection.commit()
+        connection.close()
+    except Error as ex:
+        return ex
+
+
+
 
 
 
