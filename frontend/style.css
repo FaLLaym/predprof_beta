@@ -1,66 +1,76 @@
-/* There is nothing here now, it will be updated soon! */
-html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, section, header, footer {
-		margin: 0;
-		padding: 0;
-		border: 0;
-		font-size: 100%;
-		font: inherit;
-		vertical-align: baseline;
-	}
-
-#footer{
+header{
     background: #000;
-	text-align: center;
-	padding: 4rem 0 2rem 0 ;
-}
-#footer a {
-			color: rgba(255, 255, 255, 0.5);
-		}
-#header {
-		background: rgba(0, 0, 0, 0.975);
-		color: #a6a6a6;
-		cursor: default;
-		height: 3.25em;
-		left: 0;
-		line-height: 3.25em;
-		position: fixed;
-		text-align: right;
-		top: 0;
-		width: 100%;
-		z-index: 10001;
-}
-
-#header > .logo {
-	display: inline-block;
-	height: inherit;
-	left: 1.25em;
-	line-height: inherit;
-	margin: 0;
-	padding: 0;
-	position: absolute;
+	color: #a6a6a6;
+	left: 0;
+	line-height: 3.25em;
+	position: fixed;
+	text-align: left;
 	top: 0;
+	width: 100%;
 }
-
-#header > .logo a {
-		font-size: 1.25em;
-		color: #FFF;
-		text-decoration: none;
+.logo{
+    color: #FFF;
+    margin: 0;
+	padding: 0;
 }
-body {
-		background-color: #fff;
-		color: #444;
-	}
-
-a {
+.logo a{
+    margin-left: 20px;
+    color: #FFF;
 	text-decoration: none;
 }
-#model3d {
-    width: 100%;
-    height: 100%;
+.logo a:hover {
+	color: rgba(255, 255, 255, 0.65);
+}
+
+
+footer {
+    text-align: left;
+	padding: 4rem 0 2rem 0 ;
+	background: #000;
+	text-align: center;
+	position:flex;
+	width:100%;
+}
+footer a{
+    color: #FFF;
+	text-decoration: none;
+
+}
+
+
+main {
+    margin-top: 60px;
+	flex:1;
+}
+.inventor img{
+    border-radius: 1000px;
+}
+.inventor{
+    margin: auto;
     display: block;
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 2;
-    pointer-events: none;
+    opacity:1;
+    text-align: center;
+    border-radius: 10px;
+}
+.inventor:hover{
+    border: 5px #ccc solid;
+    box-shadow: 0 0 10px #444;
+}
+section{
+    display: flex;
+    min-width: 1170px;
+    align-items: center;
+    margin: 30px;
+}
+
+
+a:hover {
+	color: rgba(255, 255, 255, 0.65);
+}
+html, body {
+    margin:0;
+    padding:0;
+}
+body{
+    background-image: url("img/b269378(1).jpg");
 }
