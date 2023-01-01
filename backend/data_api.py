@@ -1,14 +1,11 @@
 import requests
 import datetime
 
-
-
-
-
-
+# start id (mb we don`t need it)
 id = 1
 
-# getting temperature+humidity from 4 sensors
+
+# get temperature+humidity from 4 sensors and return tuple.type
 def get_t_h():
     tem_hum = []
     ct = 0
@@ -26,7 +23,7 @@ def get_t_h():
     return tuple(tem_hum)
 
 
-# getting hum from 6 sensors
+# get hum from 6 sensors and return tuple.type
 def get_hum():
     hum = []
     global id
@@ -40,6 +37,7 @@ def get_hum():
     hum.append('%.2f' % (c / 6))
     id += 1
     return tuple(hum)
+
 
 # switching window by patch; state [0, 1]
 def switch_window():
@@ -68,4 +66,3 @@ def switch_totalHum():
     url = ''
     params = {"state": state_value}
     r = requests.patch(url=url, params=params)
-
