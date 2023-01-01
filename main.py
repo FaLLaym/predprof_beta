@@ -1,15 +1,14 @@
 import time
 
-
-from backend.data_api import (get_t_h, get_hum, switch_window, switch_water, switch_totalHum)
-from backend.graphics import draw_graph_humidity
-from backend.database import insert_data, clear_data
+# import functions from the database directory
+from backend.database import (insert_humidity_data, insert_tempohum_data, clear_all_data)
 
 
-# beta init getting t+h; getting hum
+# init databases that parse the data from API`S
 if __name__ == "__main__":
-    clear_data()
+    clear_all_data()
     while True:
-        insert_data()
+        insert_tempohum_data()
+        insert_humidity_data()
         time.sleep(5)
 
