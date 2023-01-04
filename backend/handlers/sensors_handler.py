@@ -157,7 +157,7 @@ class WateringSensor(Sensor):
             "state": _state
         }
 
-        response: requests.Response = requests.get(
+        response: requests.Response = requests.patch(
             url=request_url, params=request_params)
 
         if response.status_code != 200:
