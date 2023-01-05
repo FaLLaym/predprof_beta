@@ -1,12 +1,12 @@
 import requests
 import datetime
-from typing import Literal, Optional
+from typing import (Literal, Optional)
 import re
 
 from ..utils.db_controller import db_init
-from ..utils.db_controller import temp_hum_DB, hum_DB, events_DB
+from ..utils.db_controller import (temp_hum_DB, hum_DB, events_DB)
 from ..utils import logger
-from .config_handler import AUTH_TOKEN, DEBUG_MODE
+from .config_handler import (AUTH_TOKEN, DEBUG_MODE)
 
 
 class Sensor:
@@ -184,10 +184,10 @@ class SensorsPool:
         self.__sensors_pool["hum"] = []  # soil humidity
         self.__sensors_pool["watering"] = []  # soil watering
 
-    def __get_pool(self, pool_name: Literal["fork_drive", "total_hum", "temp_hum", "hum", "watering"]) -> list:
+    def __get_pool(self, pool_name: Literal["temp_hum", "hum", "watering"]) -> list:
         return self.__sensors_pool[pool_name]
 
-    def __get_next_id(self, sensors_pool_name: Literal["fork_drive", "total_hum", "temp_hum", "hum", "watering"]) -> int:
+    def __get_next_id(self, sensors_pool_name: Literal["temp_hum", "hum", "watering"]) -> int:
         return len(self.__get_pool(sensors_pool_name))+1 if type(self.__get_pool(sensors_pool_name)) is list else 0 # type: ignore
 
     def connect_sensor(self, sensor: Sensor) -> None:
@@ -260,35 +260,43 @@ class SensorsPool:
         if DEBUG_MODE: logger.debug(f"fetched {len(export)} rows from hum in {period}")
         return export
 
-    def run_event(self, event_type: Literal['window', 'watering', 'total_hum'] | str, state_data: dict) -> int:
-        """
-        # TODO assign separate functions for each sensor, cuz rn it looks kinda ugly
-
-        Runs event
-
-        Use cases:
-        "window" | {"state":"open"/"close"}
-        "total_hum" | {"state":"on"/"off"}
-        "watering<int:1-6>" | {"state":"on"/"off"}
-        """
-
-        status = None
-        if event_type == "window":
-            status = self.fork_drive.toggle(state_data["state"])
-        elif event_type == "total_hum":
-            status = self.total_hum.toggle(state_data["state"])
-        elif re.sub(r"\d+$","",event_type) == "watering":
-            status = self.__get_pool("watering")[int(re.sub(r"^watering","",event_type))-1].toggle(state_data["state"])
+    def get_sensor_state(self, sensor: Literal["window", "watering", "total_hum"], id: (int | None) = None) -> str:
+        if sensor == "window":
+            return "open" if self.fork_drive.get_state() else "closed"
+        elif sensor == "watering" and id:
+            return "on" if self.__get_pool("watering")[id-1] else "off"
+        elif sensor == "total_hum":
+            return "on" if self.total_hum.get_state() else "off"
         else:
-            status = 404
+            return "unknown"
 
-        events_DB.event_entry(event_type, state_data)
-        if DEBUG_MODE: logger.debug(f"registered {event_type} event: {state_data} with status {status}")
-
-        return status
-
-    def last_date_of_event(self, event_type: Literal['window', 'watering', 'total_hum'] | str, state_data: str | dict) -> Optional[datetime.datetime]:
+    def change_sensor_state(self, sensor: Literal["window", "watering", "total_hum"], state: Literal["open", "close", "on", "off"], id: (int | None) = None) -> int:
         """
-        Get date of last event (or None)
+        Runs sensors events
+
+        sensor      | state            | id
+        "window"    | "open" / "close" | None
+        "total_hum" | "on" / "off"     | None
+        "watering"  | "on" / "off"     | 1-6
         """
-        return events_DB.last_date_of_event(event_type, state_data)
+
+        response = None
+        if sensor == "window":
+            response = self.fork_drive.toggle(state) # type: ignore
+        elif sensor == "watering":
+            response = self.__get_pool("watering")[id-1].toggle(state) # type: ignore
+        elif sensor == "total_hum":
+            response = self.total_hum.toggle(state) # type: ignore
+        else:
+            response = 404
+
+        events_DB.event_entry(sensor, state, id)
+
+        return response
+
+    def last_date_of_event(self, sensor: Literal['window', 'watering', 'total_hum'], state: Literal["open", "close", "on", "off"], id: (int | None) = None) -> Optional[datetime.datetime]:
+        """
+        Get date of event (or None if event wasn't registered)
+        """
+
+        return events_DB.last_date_of_event(sensor, state, id=id)
