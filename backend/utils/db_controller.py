@@ -3,10 +3,9 @@ import datetime
 from dateutil.relativedelta import relativedelta
 from typing import Literal, Tuple, Optional
 import re
-import json
 
 from ..utils import logger
-from ..handlers.config_handler import db_name
+from ..handlers.config_handler import (db_name, DEBUG_MODE)
 
 global db
 global sql
@@ -58,7 +57,7 @@ def db_init() -> None:
         ")")
 
     db.commit()
-    logger.debug("DB initialized")
+    if DEBUG_MODE: logger.debug("DB initialized")
 
 
 class temp_hum_DB:
@@ -76,7 +75,6 @@ class temp_hum_DB:
 
     @staticmethod
     @logger.catch
-    # so sad there are no regex type annotations...
     def get_data_in_period(period: str) -> list:
         def __snap_back(__period: str) -> Tuple[datetime.datetime, int]: # so sad there are no regex type annotations...
             """
@@ -124,7 +122,6 @@ class hum_DB:
 
     @staticmethod
     @logger.catch
-    # so sad there are no regex type annotations...
     def get_data_in_period(period: str) -> list:
         def __snap_back(__period: str) -> Tuple[datetime.datetime, int]: # so sad there are no regex type annotations...
             """
@@ -160,24 +157,20 @@ class hum_DB:
 class events_DB:
     @staticmethod
     @logger.catch
-    def event_entry(event_type: Literal["window", "watering", "total_hum"] | str, state_data: (str | dict)) -> None:
-        if type(state_data) is dict:
-            state_data = json.dumps(
-                state_data, sort_keys=True, separators=(',', ':'))
+    def event_entry(sensor_name: Literal["window", "watering", "total_hum"] | str, state: str, id: (int | None) = None) -> None:
+        if id: sensor_name += f"{id}"
 
         sql.execute("INSERT INTO events (date, type, state_data) VALUES (?,?,?)", 
-            [datetime.datetime.now(), event_type, state_data])
+            [datetime.datetime.now(), sensor_name, state])
         db.commit()
 
     @staticmethod
     @logger.catch
-    def last_date_of_event(event_type: Literal["window", "watering", "total_hum"] | str, state_data: (str | dict)) -> Optional[datetime.datetime]:
-        if type(state_data) is dict:
-            state_data = json.dumps(
-                state_data, sort_keys=True, separators=(',', ':'))
+    def last_date_of_event(sensor_name: Literal["window", "watering", "total_hum"] | str, state: str, id: (int | None) = None) -> Optional[datetime.datetime]:
+        if id: sensor_name += f"{id}"
 
         date = sql.execute("SELECT date FROM events WHERE type = ? AND state_data = ? ORDER BY date DESC", 
-            [event_type, state_data]).fetchone()
+            [sensor_name, state]).fetchone()
 
         if date:
             return datetime.datetime.strptime(date[0], "%Y-%m-%d %H:%M:%S.%f")
