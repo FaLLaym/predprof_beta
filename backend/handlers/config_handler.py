@@ -11,11 +11,11 @@ db_update_frequency_per_minute = config["General"].getint("db-update-frequency-p
 
 preinstalled_temp_hum = config["Preinstalled"].getint("preinstalled-temp_hum")
 preinstalled_hum = config["Preinstalled"].getint("preinstalled-hum")
-preinstalled_hum = config["Preinstalled"].getint("preinstalled-watering")
+preinstalled_watering = config["Preinstalled"].getint("preinstalled-watering")
 
 from ..handlers.sensors_handler import Sensor, SensorsPool
 sensors_pool = SensorsPool()
 
 for _ in range(preinstalled_temp_hum): sensors_pool.connect_sensor(Sensor("temp_hum"))
 for _ in range(preinstalled_hum): sensors_pool.connect_sensor(Sensor("hum"))
-for _ in range(preinstalled_hum): sensors_pool.connect_sensor(Sensor("watering"))
+for _ in range(preinstalled_watering): sensors_pool.connect_sensor(Sensor("watering"))

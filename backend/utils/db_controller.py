@@ -6,6 +6,7 @@ import re
 
 from ..utils import logger
 from ..handlers.config_handler import (db_name, DEBUG_MODE)
+from ..handlers.config_handler import (preinstalled_temp_hum as pre_th, preinstalled_hum as pre_h)
 
 global db
 global sql
@@ -14,46 +15,35 @@ global sql
 def db_init() -> None:
     global db, sql
     try:
-        db = sqlite3.connect(f"./backend/utils/db/{db_name}")
+        db = sqlite3.connect(f"./backend/utils/db/{db_name}", check_same_thread=False)
     except sqlite3.DatabaseError:
         raise Exception("db-name in config.ini is incorrect")
 
     sql = db.cursor()
     sql.execute(
-        "CREATE TABLE IF NOT EXISTS temp_hum ("
-            "id INTEGER UNIQUE NOT NULL PRIMARY KEY AUTOINCREMENT,"
-            "date DATETIME NOT NULL,"
-            "t1 REAL,"
-            "t2 REAL,"
-            "t3 REAL,"
-            "t4 REAL,"
-            "h1 REAL,"
-            "h2 REAL,"
-            "h3 REAL,"
-            "h4 REAL,"
-            "t_avg REAL,"
-            "h_avg REAL"
-        ")")
+        f"""CREATE TABLE IF NOT EXISTS temp_hum (
+            id INTEGER UNIQUE NOT NULL PRIMARY KEY AUTOINCREMENT,
+            date DATETIME NOT NULL,
+            {",".join(map(lambda x: f"t{x} REAL", range(1,pre_th+1)))},
+            {",".join(map(lambda x: f"h{x} REAL", range(1,pre_th+1)))},
+            t_avg REAL,
+            h_avg REAL
+        )""")
 
     sql.execute(
-        "CREATE TABLE IF NOT EXISTS hum ("
-            "id INTEGER UNIQUE NOT NULL PRIMARY KEY AUTOINCREMENT,"
-            "date DATETIME NOT NULL,"
-            "h1 REAL,"
-            "h2 REAL,"
-            "h3 REAL,"
-            "h4 REAL,"
-            "h5 REAL,"
-            "h6 REAL,"
-            "h_avg REAL"
-        ")")
+        f"""CREATE TABLE IF NOT EXISTS hum (
+            id INTEGER UNIQUE NOT NULL PRIMARY KEY AUTOINCREMENT,
+            date DATETIME NOT NULL,
+            {",".join(map(lambda x: f"h{x} REAL", range(1,pre_h+1)))},
+            h_avg REAL
+        )""")
 
     sql.execute(
-        "CREATE TABLE IF NOT EXISTS events ("
-            "id INTEGER UNIQUE NOT NULL PRIMARY KEY AUTOINCREMENT,"
-            "date DATETIME NOT NULL,"
-            "type TEXT NOT NULL,"
-            "state_data TEXT NOT NULL"
+        "CREATE TABLE IF NOT EXISTS events (" \
+            "id INTEGER UNIQUE NOT NULL PRIMARY KEY AUTOINCREMENT," \
+            "date DATETIME NOT NULL," \
+            "type TEXT NOT NULL," \
+            "state_data TEXT NOT NULL" \
         ")")
 
     db.commit()
@@ -69,8 +59,10 @@ class temp_hum_DB:
         filtered_hum: list[float] = list(filter(lambda x: x is not None, hum))  # type: ignore
         h_avg = h_avg or (0.0 if not len(filtered_hum) > 0 else round(sum(filtered_hum) / len(filtered_hum), 2))
 
-        sql.execute("INSERT INTO temp_hum (date, t1, t2, t3, t4, h1, h2, h3, h4, t_avg, h_avg) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
-            [datetime.datetime.now(), *temp, *hum, t_avg, h_avg])
+        sql.execute(f"""INSERT INTO temp_hum (date, {','.join(map(lambda x: f"t{x}", range(1, pre_th+1)))},
+                    {','.join(map(lambda x: f"h{x}", range(1, pre_th+1)))}, t_avg, h_avg) 
+                    VALUES (?,{",".join(["?"]*pre_th)},{",".join(["?"]*pre_th)},?,?)""",
+                    [datetime.datetime.now(), *temp, *hum, t_avg, h_avg])
         db.commit()
 
     @staticmethod
@@ -99,10 +91,15 @@ class temp_hum_DB:
                 return (datetime.datetime.now() - datetime.timedelta(minutes=1), 1)
 
         snapback, divis = __snap_back(period)
+        now = datetime.datetime.now()
+
+        data = int(sql.execute("SELECT COUNT(date) FROM temp_hum WHERE date BETWEEN ? AND ?", [snapback, now]).fetchone()[0])
+        if data <= 3600:
+            divis = 1
 
         export = sql.execute(
-            "SELECT * FROM temp_hum WHERE date BETWEEN ? AND ? AND ROWID > 0 AND ROWID % ? = 0 ORDER BY date DESC",
-            [snapback, datetime.datetime.now(), divis]).fetchall()
+            f"SELECT * FROM temp_hum WHERE date BETWEEN ? AND ? AND ROWID > 0 AND ROWID % ? = 0 ORDER BY date DESC",
+            [snapback, now, divis]).fetchall()
 
         return export
 
@@ -116,7 +113,7 @@ class hum_DB:
         h_avg = h_avg or (0.0 if not len(
             filtered_hum) > 0 else round(sum(filtered_hum) / len(filtered_hum), 2))
 
-        sql.execute("INSERT INTO hum (date, h1, h2, h3, h4, h5, h6, h_avg) VALUES (?,?,?,?,?,?,?,?)",
+        sql.execute(f"""INSERT INTO hum (date, {','.join(map(lambda x: f"h{x}", range(1, pre_h+1)))}, h_avg) VALUES (?,{",".join(["?"]*pre_h)},?)""",
             [datetime.datetime.now(), *hum, h_avg])
         db.commit()
 
@@ -146,10 +143,15 @@ class hum_DB:
                 return (datetime.datetime.now() - datetime.timedelta(minutes=1), 1)
     
         snapback, divis = __snap_back(period)
+        now = datetime.datetime.now()
+
+        data = int(sql.execute("SELECT COUNT(date) FROM hum WHERE date BETWEEN ? AND ?", [snapback, now]).fetchone()[0])
+        if data <= 3600:
+            divis = 1
 
         export = sql.execute(
             "SELECT * FROM hum WHERE date BETWEEN ? AND ? AND ROWID > 0 AND ROWID % ? = 0 ORDER BY date DESC", 
-            [snapback, datetime.datetime.now(), divis]).fetchall()
+            [snapback, now, divis]).fetchall()
 
         return export
 
@@ -160,8 +162,7 @@ class events_DB:
     def event_entry(sensor_name: Literal["window", "watering", "total_hum"] | str, state: str, id: (int | None) = None) -> None:
         if id: sensor_name += f"{id}"
 
-        sql.execute("INSERT INTO events (date, type, state_data) VALUES (?,?,?)", 
-            [datetime.datetime.now(), sensor_name, state])
+        sql.execute("INSERT INTO events (date, type, state_data) VALUES (?,?,?)", [datetime.datetime.now(), sensor_name, state])
         db.commit()
 
     @staticmethod
@@ -169,8 +170,7 @@ class events_DB:
     def last_date_of_event(sensor_name: Literal["window", "watering", "total_hum"] | str, state: str, id: (int | None) = None) -> Optional[datetime.datetime]:
         if id: sensor_name += f"{id}"
 
-        date = sql.execute("SELECT date FROM events WHERE type = ? AND state_data = ? ORDER BY date DESC", 
-            [sensor_name, state]).fetchone()
+        date = sql.execute("SELECT date FROM events WHERE type = ? AND state_data = ? ORDER BY date DESC", [sensor_name, state]).fetchone()
 
         if date:
             return datetime.datetime.strptime(date[0], "%Y-%m-%d %H:%M:%S.%f")

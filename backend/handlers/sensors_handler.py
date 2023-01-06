@@ -262,7 +262,7 @@ class SensorsPool:
 
     def get_sensor_state(self, sensor: Literal["window", "watering", "total_hum"], id: (int | None) = None) -> str:
         if sensor == "window":
-            return "open" if self.fork_drive.get_state() else "closed"
+            return "open" if self.fork_drive.get_state() else "close"
         elif sensor == "watering" and id:
             return "on" if self.__get_pool("watering")[id-1].get_state() else "off"
         elif sensor == "total_hum":
