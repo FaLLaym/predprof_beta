@@ -5,12 +5,14 @@ from multiprocessing import Process
 
 if __name__ == "__main__":
     parser_process = Process(target=api_parser.main)
+    server = Process(target=flask_server.main)
 
     try:
         parser_process.start()
-        flask_server.main()
+        server.start()
         while 1:
             pass
     except KeyboardInterrupt:
         parser_process.kill()
+        server.kill()
         print("Program successfully ended")
