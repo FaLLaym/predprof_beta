@@ -3,7 +3,7 @@ import datetime
 from typing import (Literal, Optional)
 import re
 
-from ..utils.db_controller import db_init
+# from ..utils.db_controller import db_init
 from ..utils.db_controller import (temp_hum_DB, hum_DB, events_DB)
 from ..utils import logger
 from .config_handler import (AUTH_TOKEN, DEBUG_MODE)
@@ -173,7 +173,7 @@ class WateringSensor(Sensor):
 
 class SensorsPool:
     def __init__(self) -> None:
-        db_init() # init database
+        # db_init() # init database
 
         self.__sensors_pool = {}  # init sensors pool dict
 

@@ -13,6 +13,6 @@ if __name__ == "__main__":
         while 1:
             pass
     except KeyboardInterrupt:
-        parser_process.kill()
-        server.kill()
+        parser_process.terminate()
+        server.terminate()
         print("Program successfully ended")
