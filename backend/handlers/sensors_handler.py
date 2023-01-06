@@ -3,7 +3,6 @@ import datetime
 from typing import (Literal, Optional)
 import re
 
-# from ..utils.db_controller import db_init
 from ..utils.db_controller import (temp_hum_DB, hum_DB, events_DB)
 from ..utils import logger
 from .config_handler import (AUTH_TOKEN, DEBUG_MODE)
