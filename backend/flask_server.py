@@ -22,7 +22,7 @@ class SensorState:
 
             elif sensor == "watering":
                 if not "id" in args or args["id"] is None:
-                    abort(Response("Param \"id\" was not specified", status=406))
+                    abort(Response("Param \"id\" was not specified", status=400))
                 try:
                     id = args["id"]
                     if not id.isdigit():
@@ -47,21 +47,21 @@ class SensorState:
             status = None
             if sensor in "window":
                 if state not in ["open", "close"]:
-                    abort(Response("Wrong state", status=406))
+                    abort(Response("Wrong state", status=400))
 
                 status = sensors_pool.change_sensor_state(sensor, state)
 
             elif sensor == "total_hum":
                 if state not in ["on", "off"]:
-                    abort(Response("Wrong state", status=406))
+                    abort(Response("Wrong state", status=400))
 
                 status = sensors_pool.change_sensor_state(sensor, state)
 
             elif sensor == "watering":
                 if not "id" in args or args["id"] is None:
-                    abort(Response("Param \"id\" was not specified", status=406))
+                    abort(Response("Param \"id\" was not specified", status=400))
                 if state not in ["on", "off"]:
-                    abort(Response("Wrong state", status=406))
+                    abort(Response("Wrong state", status=400))
 
                 try:
                     id = args["id"]
@@ -87,23 +87,23 @@ class SensorState:
             export = {}
             if sensor == "window":
                 if state not in ["open", "close"]:
-                    abort(Response("Wrong state", status=406))
+                    abort(Response("Wrong state", status=400))
 
                 date = sensors_pool.last_date_of_event(sensor, state) 
                 export["date"] = f"{date}" if date else "null"
 
             elif sensor == "total_hum":
                 if state not in ["on", "off"]:
-                    abort(Response("Wrong state", status=406))
+                    abort(Response("Wrong state", status=400))
 
                 date = sensors_pool.last_date_of_event(sensor, state)
                 export["date"] = f"{date}" if date else "null"
 
             elif sensor == "watering":
                 if not "id" in args or args["id"] is None:
-                    abort(Response("Param \"id\" was not specified", status=406))
+                    abort(Response("Param \"id\" was not specified", status=400))
                 if state not in ["on", "off"]:
-                    abort(Response("Wrong state", status=406))
+                    abort(Response("Wrong state", status=400))
                 
                 try:
                     id = args["id"]
@@ -155,10 +155,10 @@ class Data:
                     data = sensors_pool.get_data_temp_hum(f"{period_n}{period_l}")
                     export["data"] = data if data else "null"
                 except IndexError:
-                    abort(Response("Wrong t param format", status=406))
+                    abort(Response("Wrong t param format", status=400))
 
             else:
-                abort(Response("Wrong t param format", status=406))
+                abort(Response("Wrong t param format", status=400))
 
             return Response(json.dumps(export), status=200, mimetype="application/json")
 
@@ -189,10 +189,10 @@ class Data:
                     data = sensors_pool.get_data_hum(f"{period_n}{period_l}")
                     export["data"] = data if data else "null"
                 except IndexError:
-                    abort(Response("Wrong t param format", status=406))
+                    abort(Response("Wrong t param format", status=400))
 
             else:
-                abort(Response("Wrong t param format", status=406))
+                abort(Response("Wrong t param format", status=400))
 
             return Response(json.dumps(export), status=200, mimetype="application/json")
 
