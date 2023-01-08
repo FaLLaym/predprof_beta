@@ -106,7 +106,7 @@ POST /api/sensor/<string:sensor>/change-state/<string:state>
 
 | Attribute | Type | Response Values | Description |
 | :-------: | :--: | :-------------- | :---------- |
-| `success` | `bool` | <table> <tbody> <tr> <td> <table> <tbody> <tr> <td>`true`</td> </tr> <tr> <td>`false`</td> </tr> </tbody> </table>  </tr> </tbody> </table> | Describes if the request was successfull or not |
+| `success` | `bool` | <table> <tbody> <tr> <td>`true`</td> </tr> <tr> <td>`false`</td> </tr> </tbody> </table> | Describes if the request was successfull or not |
 
 ### Status Codes
 
