@@ -14,7 +14,6 @@ a{
 
 container{
     width:100%;
-    max-width:1200px;
     margin:0 auto;
 }
 
@@ -30,6 +29,7 @@ container{
 }
 
 body{
+    min-width:1300px;
     background: linear-gradient(to right, #0095D9, #00BE44) fixed;
 }
 
@@ -105,26 +105,47 @@ body{
 
 /* Section */
 .section{
+    width:100%;
     margin-top:80px;
     color:#fff;
     padding: 80px o;
-
-}
-long_block
-.section_header{
     text-align: center;
+}
+.section_header{
     width:100%;
-    max-width: 2510px;
     margin-bottom:40px;
 }
 
 .statistic{
+    display:inline-block;
     width:100%;
-    max-width:1194px;
+    max-width:1260px;
     min-width:600px;
+    width:100%;
+    min-height: 300px;
+    background: rgba(0, 0, 0, 0.65);
+
+    border: 0px;
+    border-radius: 20px;
 }
 
-/*footer*/
+.blocks{
+    display:inline-block;
+}
+
+.graf{
+    float: left;
+    margin:10px;
+    min-width:400px;
+    width:30%;
+    height: 300px;
+    background: rgba(0, 0, 0, 0.65);
+
+    border: 0px;
+    border-radius: 20px;
+}
+
+/*footer
 footer {
     position-bottom:fixed;
     text-align: right;
@@ -144,7 +165,7 @@ footer a{
 	text-decoration: none;
 	margin-right: 20px;
 }
-
+*/
 
 
 
@@ -258,7 +279,7 @@ nav a:hover {
      width:100%;
      height:400px;
      display: inline-block;
-     background: rgba(0, 0, 0, 0.65);
+     statistic
      text-align: center;
      margin: 5px;
      padding: 5px;
