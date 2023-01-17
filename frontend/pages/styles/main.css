@@ -1,0 +1,257 @@
+*
+*:before,
+*:after{
+    box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin:0;
+}
+a{
+    text-decoration: none;
+    color:#fff;
+}
+
+container{
+    width:100%;
+    max-width:1200px;
+    margin:0 auto;
+}
+
+/* Intro */
+
+.intro{
+    width:100%;
+    height:100vh;
+
+    background: url("../img/greenhose-enter.png") center no-repeat;
+    -webkit-background-size:cover;
+    background-size:cover;
+}
+
+body{
+    background: linear-gradient(to right, #0095D9, #00BE44) fixed;
+}
+
+/* Header */
+
+.header{
+    background: #000;
+    line-height: 3.25em;
+    width:100%;
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    z-index:1000;
+}
+
+.header_inner{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+}
+
+.header_logo{
+    margin-left:20px;
+    font-size: 30px;
+    font-weight: 700;
+    color: #fff;
+}
+
+/* Nav */
+
+.nav{
+    margin-right:30px;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+.nav＿link {
+    display: inline-block;
+    vertical-align: top;
+    margin: 15px;
+    position:relative;
+
+    color: #fff;
+    text-decoration: none;
+
+    transition: color .2s linear;
+}
+
+.nav_link:after{
+    content: "";
+    display: block;
+    width:100%;
+    height:3px;
+    opacity: 0;
+
+    background-color: #fff;
+
+    position: absolute;
+    top:100%;
+    left:0;
+    z-index:1;
+
+    transition: opacity .4s linear;
+}
+
+.nav＿link:hover {
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.nav＿link:hover:after {
+    opacity: 1;
+}
+
+/* Section */
+.section{
+    padding: 80px o;
+}
+
+.section_header{
+    width:100%;
+    max-width: 2510px;
+    margin-bottom:40px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+header{
+
+	color: #a6a6a6;
+	left: 0;
+
+	position: absolute;
+	text-align: left;
+	top: 0;
+	width: 100%;
+	display: flex;
+    justify-content: space-between;
+
+
+}
+.logo a{
+    position: absolute;
+    margin-left: 20px;
+    color: #FFF;
+	text-decoration: none;
+}
+*/
+/*
+footer {
+    text-align: right;
+	padding: 1rem 0 0.5rem 0 ;
+	background: #000;
+	width:100%;
+    height: 30px;
+    width: 100%;
+    bottom: 0px;
+    background-color: #000;
+    position: absolute;
+    margin-top: -100px;
+}
+footer a{
+    color: #FFF;
+	text-decoration: none;
+	margin-right: 20px;
+}
+main {
+    text-align:center;
+    margin-top: 60px;
+    margin-bottom: 60px;
+	flex:1;
+}
+*/
+
+
+
+/*
+a:hover {
+	color: rgba(255, 255, 255, 0.65);
+}
+html, body {
+    margin:0;
+    padding:0;
+}
+body{
+    background: linear-gradient(to right, #0095D9, #00BE44) fixed;
+    /*background-image: url("C:\Users\User\PycharmProjects\predprof_beta\frontend\img\greenhose-enter.png");*/
+}
+*/
+/*
+nav{
+  color: #FFF;
+  text-align: center;
+  display: inline-block;
+  margin-right:10px;
+}
+nav a{
+    padding:5px;
+    text-decoration: none;
+    color: white;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0% 100% ;
+    background-repeat: no-repeat;
+    background-size: 0% 2px;
+    transition: background-size .4s;
+}
+nav a:hover {
+    background-size: 100% 2px;
+}
+
+
+.container{
+    color: white;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+.statistic{
+     width:100%;
+     height:400px;
+     display: inline-block;
+     background: rgba(0, 0, 0, 0.65);
+     text-align: center;
+     margin: 5px;
+     padding: 5px;
+     border: 0px;
+     border-radius: 20px;
+}
+.grafics{
+    display: inline-block;
+    text-align: center;
+    margin: 5px;
+    padding: 5px;
+}
+.graf{
+     width:400px;
+     height:400px;
+     display: inline-block;
+     background: rgba(0, 0, 0, 0.65);
+     text-align: center;
+     margin: 5px;
+     padding: 5px;
+     border: 0px;
+     border-radius: 20px;
+}
+
+*/
