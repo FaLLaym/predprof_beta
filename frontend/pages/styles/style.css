@@ -117,8 +117,6 @@ footer a{
 
 .intro_container{
     width:40%;
-    max-width:1194px;
-    min-width:600px;
     color: white;
     text-align: center;
     position: absolute;
@@ -126,6 +124,9 @@ footer a{
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%)
+
+    max-width:1194px;
+    min-width:600px;
 }
 
 .intro_title{

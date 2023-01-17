@@ -105,16 +105,45 @@ body{
 
 /* Section */
 .section{
+    margin-top:80px;
+    color:#fff;
     padding: 80px o;
-}
 
+}
+long_block
 .section_header{
+    text-align: center;
     width:100%;
     max-width: 2510px;
     margin-bottom:40px;
 }
 
+.statistic{
+    width:100%;
+    max-width:1194px;
+    min-width:600px;
+}
 
+/*footer*/
+footer {
+    position-bottom:fixed;
+    text-align: right;
+	padding: 1rem 0 0.5rem 0 ;
+	background: #000;
+	width:100%;
+	position: absolute;
+    line-height: 2.5em;
+    width: 100%;
+    bottom: 0px;
+    left:0;
+    right:0;
+    background-color: #000;
+}
+footer a{
+    color: #FFF;
+	text-decoration: none;
+	margin-right: 20px;
+}
 
 
 
