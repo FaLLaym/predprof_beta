@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2fd37370-2dbc-4d55-95a4-d3694b7ac021" name="Changes" comment="refactor front">
-      <change afterPath="$PROJECT_DIR$/frontend/pages/statistics.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/pages/styles/statistics.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/main.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/styles/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/styles/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/styles/style.css" afterDir="false" />
-    </list>
+    <list default="true" id="2fd37370-2dbc-4d55-95a4-d3694b7ac021" name="Changes" comment="refactor front" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -111,7 +103,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673988430496</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="refactor front">
+      <created>1674061470852</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1674061470852</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
