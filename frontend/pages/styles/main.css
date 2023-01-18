@@ -1,7 +1,8 @@
-*
-*:before,
-*:after{
+*, *:before, *:after {
     box-sizing: border-box;
+}
+div {
+    display: block;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -12,10 +13,13 @@ a{
     color:#fff;
 }
 
-container{
+.section{
     width:100%;
     margin:0 auto;
+    display:grid;
+    grid-template-rows: repeat(6,auto);
 }
+
 
 /* Intro */
 
@@ -44,6 +48,8 @@ body{
     left:0;
     right:0;
     z-index:1000;
+
+    min-width:1200px;
 }
 
 .header_inner{
@@ -63,7 +69,8 @@ body{
 
 .nav{
     margin-right:30px;
-    font-size: 20px;
+    font-size: 30px;
+    font-weight: 500;
     text-transform: uppercase;
 }
 .nav＿link {
@@ -114,30 +121,27 @@ body{
 .section_header{
     width:100%;
     margin-bottom:40px;
+    text-align:center;
 }
 
-.statistic{
+.stat{
     display:inline-block;
-    width:100%;
-    max-width:1260px;
-    min-width:600px;
     width:100%;
     min-height: 300px;
     background: rgba(0, 0, 0, 0.65);
+    margin:12px;
 
     border: 0px;
     border-radius: 20px;
-}
 
-.blocks{
-    display:inline-block;
+    max-width:2510px;
+    min-width:1200px;
 }
 
 .graf{
     float: left;
     margin:10px;
-    min-width:400px;
-    width:30%;
+    min-width:820px;
     height: 300px;
     background: rgba(0, 0, 0, 0.65);
 
@@ -145,10 +149,42 @@ body{
     border-radius: 20px;
 }
 
-/*footer
+.grafics{
+    margin-left: auto;
+    margin-right: auto;
+
+    display:grid-inline;
+    max-width:2600px;
+    min-width:1200px;
+}
+
+.managementcenter{
+    display:inline-block;
+    width:100%;
+    min-height: 300px;
+    background: rgba(0, 0, 0, 0.65);
+    margin:12px;
+
+    border: 0px;
+    border-radius: 20px;
+
+    max-width:2510px;
+    min-width:1200px;
+}
+
+/*Footer*/
+
+.container_footer{
+    width:100%;
+    margin:0 auto;
+
+}
+
 footer {
-    position-bottom:fixed;
-    text-align: right;
+    display: flex;
+    border-top: 1px solid #e5e5e5;
+
+    text-align: center;
 	padding: 1rem 0 0.5rem 0 ;
 	background: #000;
 	width:100%;
@@ -159,149 +195,31 @@ footer {
     left:0;
     right:0;
     background-color: #000;
+    position:inline;
+
+    min-width:1200px;
 }
-footer a{
+.hrefab{
+    float: right;
     color: #FFF;
 	text-decoration: none;
 	margin-right: 20px;
 }
-*/
+.copyright {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-header{
-
-	color: #a6a6a6;
-	left: 0;
-
-	position: absolute;
-	text-align: left;
-	top: 0;
-	width: 100%;
-	display: flex;
-    justify-content: space-between;
-
-
-}
-.logo a{
-    position: absolute;
-    margin-left: 20px;
-    color: #FFF;
-	text-decoration: none;
-}
-*/
-/*
-footer {
-    text-align: right;
-	padding: 1rem 0 0.5rem 0 ;
-	background: #000;
-	width:100%;
-    height: 30px;
-    width: 100%;
-    bottom: 0px;
-    background-color: #000;
-    position: absolute;
-    margin-top: -100px;
-}
-footer a{
-    color: #FFF;
-	text-decoration: none;
-	margin-right: 20px;
-}
-main {
-    text-align:center;
-    margin-top: 60px;
-    margin-bottom: 60px;
-	flex:1;
-}
-*/
-
-
-
-/*
-a:hover {
-	color: rgba(255, 255, 255, 0.65);
-}
-html, body {
-    margin:0;
-    padding:0;
-}
-body{
-    background: linear-gradient(to right, #0095D9, #00BE44) fixed;
-    /*background-image: url("C:\Users\User\PycharmProjects\predprof_beta\frontend\img\greenhose-enter.png");*/
-}
-*/
-/*
-nav{
-  color: #FFF;
-  text-align: center;
-  display: inline-block;
-  margin-right:10px;
-}
-nav a{
-    padding:5px;
-    text-decoration: none;
-    color: white;
-    background-image: linear-gradient(currentColor, currentColor);
-    background-position: 0% 100% ;
-    background-repeat: no-repeat;
-    background-size: 0% 2px;
-    transition: background-size .4s;
-}
-nav a:hover {
-    background-size: 100% 2px;
-}
-
-
-.container{
-    color: white;
+    font-size: 14px;
+    color: #333;
     text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%)
-}
-.statistic{
-     width:100%;
-     height:400px;
-     display: inline-block;
-     statistic
-     text-align: center;
-     margin: 5px;
-     padding: 5px;
-     border: 0px;
-     border-radius: 20px;
-}
-.grafics{
-    display: inline-block;
-    text-align: center;
-    margin: 5px;
-    padding: 5px;
-}
-.graf{
-     width:400px;
-     height:400px;
-     display: inline-block;
-     background: rgba(0, 0, 0, 0.65);
-     text-align: center;
-     margin: 5px;
-     padding: 5px;
-     border: 0px;
-     border-radius: 20px;
+
 }
 
-*/
+
+
+
+
+
+
+
+
+
+
