@@ -13,12 +13,7 @@ a{
     color:#fff;
 }
 
-.section{
-    width:100%;
-    margin:0 auto;
-    display:grid;
-    grid-template-rows: repeat(6,auto);
-}
+
 
 
 /* Intro */
@@ -33,15 +28,19 @@ a{
 }
 
 body{
-    min-width:1300px;
     background: linear-gradient(to right, #0095D9, #00BE44) fixed;
 }
+
+
+
+
+
 
 /* Header */
 
 .header{
     background: #000;
-    line-height: 3.25em;
+    line-height: 3em;
     width:100%;
     position:absolute;
     top:0;
@@ -64,6 +63,12 @@ body{
     font-weight: 700;
     color: #fff;
 }
+
+
+
+
+
+
 
 /* Nav */
 
@@ -110,78 +115,15 @@ body{
     opacity: 1;
 }
 
-/* Section */
-.section{
-    width:100%;
-    margin-top:80px;
-    color:#fff;
-    padding: 80px o;
-    text-align: center;
-}
-.section_header{
-    width:100%;
-    margin-bottom:40px;
-    text-align:center;
-}
 
-.stat{
-    display:inline-block;
-    width:100%;
-    min-height: 300px;
-    background: rgba(0, 0, 0, 0.65);
-    margin:12px;
 
-    border: 0px;
-    border-radius: 20px;
 
-    max-width:2510px;
-    min-width:1200px;
-}
 
-.graf{
-    float: left;
-    margin:10px;
-    min-width:820px;
-    height: 300px;
-    background: rgba(0, 0, 0, 0.65);
 
-    border: 0px;
-    border-radius: 20px;
-}
-
-.grafics{
-    margin-left: auto;
-    margin-right: auto;
-
-    display:grid-inline;
-    max-width:2600px;
-    min-width:1200px;
-}
-
-.managementcenter{
-    display:inline-block;
-    width:100%;
-    min-height: 300px;
-    background: rgba(0, 0, 0, 0.65);
-    margin:12px;
-
-    border: 0px;
-    border-radius: 20px;
-
-    max-width:2510px;
-    min-width:1200px;
-}
 
 /*Footer*/
 
-.container_footer{
-    width:100%;
-    margin:0 auto;
-
-}
-
 footer {
-    display: flex;
     border-top: 1px solid #e5e5e5;
 
     text-align: center;
@@ -190,13 +132,11 @@ footer {
 	width:100%;
 	position: absolute;
     line-height: 2.5em;
-    width: 100%;
     bottom: 0px;
     left:0;
     right:0;
     background-color: #000;
     position:inline;
-
     min-width:1200px;
 }
 .hrefab{
@@ -212,6 +152,60 @@ footer {
     text-align: center;
 
 }
+
+
+
+
+
+/* Section */
+.section{
+    margin-left: auto;
+    margin-right: auto;
+    width:90%;
+    height:100%;
+    display:grid;
+    grid-template-rows: 30%,40%,40%;
+    margin-top:80px;
+    grid-row-gap: 15px;
+}
+
+.stat{
+    width:100%;
+    height:180px;
+    margin:20px;
+    background:rgba(0, 0, 0, 0.65);
+
+    border: 0px;
+    border-radius: 20px;
+}
+.graphics{
+    width:100%;
+    height:30%;
+    display:grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-column-gap: 15px;
+}
+    .graf{
+        width:100%;
+        height:300px;
+        background:rgba(0, 0, 0, 0.65);
+        margin:20px;
+        margin-top:0;
+        border: 0px;
+        border-radius: 20px;
+    }
+.management{
+    width:100%;
+    height:250px;
+    margin:20px;
+    background:rgba(0, 0, 0, 0.65);
+
+    border: 0px;
+    border-radius: 20px;
+}
+ё
+
+
 
 
 
