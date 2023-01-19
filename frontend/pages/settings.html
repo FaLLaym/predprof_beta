@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="./styles/settings.css">
+</head>
+
+<body>
+
+  <header class="header">
+      <div class="header_inner">
+        <div class="header_logo">
+          <a href="index.html">GREENHOUSE</a>
+        </div>
+
+        <nav class="nav">
+          <a class="nav_link" href="main.html">MAIN</a>
+          <a class="nav_link" href="settings.html">SETTINGS</a>
+          <a class="nav_link" href="statistics.html">STATISTICS</a>
+        </nav>
+      </div>
+  </header>
+
+  <section class="section">
+
+      <div class="conteiner">
+        <div class="section_title title">
+            <h1 class="title">ENTER YOUR LIMITS</h1>
+        </div>
+        <div>
+          <form class="section-main">
+            <div class="block">
+                <label for="low_t"><h1>T</h1></label>
+                <input type="range" step="1" min="20" max="80" value="10" id="low_t" name="Temp"/>
+                <h1>°C</h1>
+            </div>
+            <div class="block">
+                <label for="low_h"><h1>H</h1></label>
+                <input type="range" step="1" min="20" max="80" value="10" id="low_h" name="Temp"/>
+                <h1>%</h1>
+            </div>
+            <div class="block">
+                <label for="low_hb"><h1>Hb</h1></label>
+                <input type="range" step="1" min="20" max="80" value="10" id="low_hb" name="Temp"/>
+                <h1>%</h1>
+            </div>
+            <div class="btn">
+                <button class="submit" type="submit"><h1>Отправить</h1></button>
+            </div>
+        </form>
+        </div>
+      </div>
+      <div></div>
+  </section>
+
+
+  <footer id="footer">
+    <div class="container_footer">
+      <a class="hrefab" href="index.html">ABOUT</a>
+
+      <span class="copyright">
+                © 2023 GreenHouse by <a href="#"> John'sFishers</a>
+      </span>
+
+    </div>
+  </footer>
+
+</body>
+
+</html>

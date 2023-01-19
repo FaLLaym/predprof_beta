@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2fd37370-2dbc-4d55-95a4-d3694b7ac021" name="Changes" comment="refactor front">
+    <list default="true" id="2fd37370-2dbc-4d55-95a4-d3694b7ac021" name="Changes" comment="refactor statistics page">
+      <change afterPath="$PROJECT_DIR$/frontend/pages/settings.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/pages/styles/settings.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/pages/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/main.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/styles/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/styles/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/styles/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/statistics.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/statistics.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/styles/index.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +45,7 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\User\PycharmProjects\predprof_beta\frontend\pages\styles" />
+      <recent name="C:\Users\User\PycharmProjects\predprof_beta\frontend\pages" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\User\PycharmProjects\predprof_beta\frontend\pages\styles" />
@@ -115,7 +119,21 @@
       <option name="project" value="LOCAL" />
       <updated>1674061470852</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="refactor main page">
+      <created>1674074765957</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1674074765957</updated>
+    </task>
+    <task id="LOCAL-00010" summary="refactor statistics page">
+      <created>1674075650403</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1674075650403</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -133,6 +151,8 @@
     <MESSAGE value="js to file" />
     <MESSAGE value="js to file1" />
     <MESSAGE value="refactor front" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor front" />
+    <MESSAGE value="refactor main page" />
+    <MESSAGE value="refactor statistics page" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor statistics page" />
   </component>
 </project>
