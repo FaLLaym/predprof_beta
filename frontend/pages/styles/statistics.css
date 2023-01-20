@@ -166,6 +166,10 @@ body{
     border-radius:20px;
 }
 .section-statistic{
+    color: white;
+    text-align:center;
+    display:grid;
+    grid-template-columns: 8% 10% 10% 10% 42% 20%;
     margin: 0 30px;
     height: 120px;
     background: rgba(0, 0, 0, 0.65);
@@ -228,11 +232,39 @@ input:checked + .slider:before {
   transform: translateX(1.4em);
   background-color: #fff;
 }
-
-
-
-
-
+.btn{
+    margin-left:30px;
+    margin-top:35px;
+    padding:0px 10px;
+    background: linear-gradient(to right, #0095D9, #00BE44);
+    color: white;
+    border-radius: 17px;
+    font-size:25px;
+    border: 0px;
+    width:80px;
+    height:50px;
+    text-align:center;
+}
+.num{
+    margin-top:45px;
+}
+.switcher{
+    margin-top:42px;
+}
+.on{
+    margin-top:40px;
+    padding:5px;
+    text-align:left;
+}
+.off{
+    margin-top:40px;
+    padding:5px;
+    text-align:right;
+}
+.params{
+    text-align:left;
+    margin-top:20px;
+}
 
 
 
