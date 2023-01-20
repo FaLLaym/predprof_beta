@@ -201,8 +201,7 @@ body{
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #fff;
-  border: 1px solid #adb5bd;
+  background-color: #000f00;
   transition: .4s;
   border-radius: 30px;
 }
@@ -220,7 +219,7 @@ body{
 }
 
 input:checked + .slider {
-  background-color: #00ff00;
+  background-color: #00BE44;
   border: 1px solid ##00ff00;
 }
 
