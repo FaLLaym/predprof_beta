@@ -19,7 +19,10 @@ a{
 }
 
 
-
+:root { font-family: 'Inter', sans-serif; }
+@supports (font-variation-settings: normal) {
+  :root { font-family: 'Inter var', sans-serif; }
+}
 
 
 
@@ -31,12 +34,6 @@ body{
     min-width:1300px;
     background: linear-gradient(to right, #0095D9, #00BE44) fixed;
 }
-
-
-
-
-
-
 
 
 
@@ -66,7 +63,6 @@ body{
 .header_logo{
     margin-left:20px;
     font-size: 30px;
-    font-weight: 700;
     color: #fff;
 }
 
@@ -308,9 +304,6 @@ footer {
     text-align: center;
 
 }
-
-
-
 
 
 

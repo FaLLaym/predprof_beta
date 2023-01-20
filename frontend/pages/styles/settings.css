@@ -13,7 +13,10 @@ a{
     color:#fff;
 }
 
-
+:root { font-family: 'Inter', sans-serif; }
+@supports (font-variation-settings: normal) {
+  :root { font-family: 'Inter var', sans-serif; }
+}
 
 
 /* Intro */
@@ -60,7 +63,6 @@ body{
 .header_logo{
     margin-left:20px;
     font-size: 30px;
-    font-weight: 700;
     color: #fff;
 }
 
@@ -180,7 +182,7 @@ footer {
 
 }
 .section_title{
-    padding-top:30px;
+    padding-top:35px;
     text-align:center;
     font-size:27px;
     margin:15px 20px;
@@ -206,23 +208,65 @@ footer {
     text-align:center;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    padding-top:8%;
 }
 .btn{
     margin-left: auto;
     margin-right: auto;
+}
+.submit:hover{
+     background-color: hsl(261deg 80% 48%);
+     box-shadow: rgb(0 220 220) 0px 7px 29px 0px;
+
 }
 .submit{
     height:100px;
     width:300px;
     border:0px;
     padding:20px 10px;
-    background: linear-gradient(to right, #0095D9, #00BE44) fixed;
+    background: linear-gradient(to right, #0095D9, #00BE44);
     color: white;
     border-radius: 25px;
     border: 0px;
-    border: 2px solid;
+}
+.form {
+ --width-of-input: 250px;
+ --border-height: 1px;
+ --border-before-color: rgba(221, 221, 221, 0.39);
+ --border-after-color: #5891ff;
+ --input-hovered-color: #4985e01f;
+ position: relative;
+ width: var(--width-of-input);
+}
+/* styling of Input */
+.input {
+ color: #fff;
+ font-size: 0.9rem;
+ background-color: transparent;
+ width: 100%;
+ box-sizing: border-box;
+ padding-inline: 0.5em;
+ padding-block: 0.7em;
+ border: none;
+ border-bottom: var(--border-height) solid var(--border-before-color);
+}
+/* styling of animated border */
+.input-border {
+ position: absolute;
+ background: var(--border-after-color);
+ width: 0%;
+ height: 2px;
+ bottom: 0;
+ left: 0;
+ transition: 0.3s;
 }
 
-
+input:focus {
+ outline: none;
+}
+.container-form{
+    margin-left: auto;
+    margin-right: auto;
+}
 
 

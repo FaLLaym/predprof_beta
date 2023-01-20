@@ -16,6 +16,11 @@ a{
 body{
     background: linear-gradient(to right, #0095D9, #00BE44) fixed;
 }
+:root { font-family: 'Inter', sans-serif; }
+@supports (font-variation-settings: normal) {
+  :root { font-family: 'Inter var', sans-serif; }
+}
+
 
 /* Header */
 
@@ -41,7 +46,6 @@ body{
 .header_logo{
     margin-left:20px;
     font-size: 30px;
-    font-weight: 700;
     color: #fff;
 }
 
@@ -142,7 +146,6 @@ footer {
      border: 0px;
      border-radius: 20px;
      font-size: 1.5vw;
-     min-width:500px;
 }
 .intro_inner{
      width:100%;
@@ -165,7 +168,7 @@ footer {
 .btn{
     margin-top:10px;
     padding:15px 10px;
-    background: linear-gradient(to right, #0095D9, #00BE44) fixed;
+    background: linear-gradient(to right, #0095D9, #00BE44);
     color: white;
     border-radius: 25px;
     border: 0px;
@@ -186,3 +189,4 @@ footer {
 h1{
     margin-top:10px;
 }
+
