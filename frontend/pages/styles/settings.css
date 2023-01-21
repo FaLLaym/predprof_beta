@@ -71,7 +71,6 @@ body{
 
 
 
-
 /* Nav */
 
 .nav{
@@ -116,7 +115,23 @@ body{
 .nav＿link:hover:after {
     opacity: 1;
 }
+.nav_link {
+    margin:0 3.5px;
+    padding-bottom:6px;
+    text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0% 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 2px;
+    transition: background-size .3s;
+}
 
+.nav_link:hover {
+    background-size: 100% 5px;
+}
+.nav_link:hover::before {
+    background-size: 100% 2px;
+}
 
 
 
@@ -241,12 +256,12 @@ footer {
 /* styling of Input */
 .input {
  color: #fff;
- font-size: 0.9rem;
+ font-size: 1.6rem;
  background-color: transparent;
  width: 100%;
  box-sizing: border-box;
  padding-inline: 0.5em;
- padding-block: 0.7em;
+ padding-block: 0.5em;
  border: none;
  border-bottom: var(--border-height) solid var(--border-before-color);
 }
@@ -265,6 +280,7 @@ input:focus {
  outline: none;
 }
 .container-form{
+    margin-top:-17px;
     margin-left: auto;
     margin-right: auto;
 }

@@ -69,7 +69,33 @@
     </div>
   </footer>
 
-  <script src="index.js"></script>
+  <script>
+    var current_page;
+
+    if (window.location.href == "http://yoursite.ru/index1.html") {current_page = document.getElementById('a1');}
+    else if (window.location.href == "http://yoursite.ru/index2.html") {current_page = document.getElementById('a2');}
+    и т.д.
+    else {current_page = document.getElementById('a6');}
+
+    current_page.style.borderBottom = "2px solid #676a6c";
+
+    var menu_links = document.getElementById('menu').getElementsByTagName('a');
+
+    for(var i = 0; i< menu_links.length; i++){
+      menu_links[i].onmouseover = function() {
+       this.style.borderBottom = "2px solid #676a6c";
+       if(this!=current_page) {
+         current_page.style.borderBottom = "2px solid transparent";
+       }
+      }
+      menu_links[i].onmouseout = function() {
+       this.style.borderBottom = "2px solid transparent";
+       if(this!=current_page) {
+         current_page.style.borderBottom = "2px solid #676a6c";
+       }
+      }
+    }
+  </script>
 </body>
 
 </html>
