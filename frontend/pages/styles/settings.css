@@ -68,9 +68,6 @@ body{
 
 
 
-
-
-
 /* Nav */
 
 .nav{
@@ -79,16 +76,15 @@ body{
     font-weight: 500;
     text-transform: uppercase;
 }
-.nav＿link {
-    display: inline-block;
-    vertical-align: top;
-    margin: 15px;
-    position:relative;
-
-    color: #fff;
+.nav_link {
+    margin:0 3.5px;
+    padding-bottom:7.5px;
     text-decoration: none;
-
-    transition: color .2s linear;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0% 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 2px;
+    transition: background-size .3s;
 }
 
 .nav_link:after{
@@ -115,25 +111,17 @@ body{
 .nav＿link:hover:after {
     opacity: 1;
 }
-.nav_link {
-    margin:0 3.5px;
-    padding-bottom:6px;
-    text-decoration: none;
-    background-image: linear-gradient(currentColor, currentColor);
-    background-position: 0% 100%;
-    background-repeat: no-repeat;
-    background-size: 0% 2px;
-    transition: background-size .3s;
-}
 
-.nav_link:hover {
-    background-size: 100% 5px;
+
+.dis:hover {
+    background-size: 100% 3px;
 }
 .nav_link:hover::before {
-    background-size: 100% 2px;
+    background-size: 100% 3px;
 }
-
-
+.active {
+    background-size: 100% 5px;
+}
 
 
 
