@@ -82,7 +82,7 @@ POST /api/sensor/<string:sensor>/change-state/<string:state>
 | `state` | `string` | <table> <tbody> <tr> <td>`on`</td> <td>`off`</td> </tr> <tr> <td>`open`</td> <td>`close`</td> </tr> </tbody> </table> | Defines the state that the sensor will change to |
 
 | Query Param | Type | Allowed Values | Description |
-| :---------: | :--: | :------------- | :---------- |
+| :---------: | :--: | :-------------: | :---------- |
 | `id` | `int` | `1≤n` | **Optionally required** to define id for watering |
 
 ### Examples using curl
@@ -139,7 +139,7 @@ GET /api/sensor/<string:sensor>/last-state-change/<string:state>
 | `state` | `string` | <table> <tbody> <tr> <td>`on`</td> <td>`off`</td> </tr> <tr> <td>`open`</td> <td>`close`</td> </tr> </tbody> </table> | Defines the state that corresponds to the event |
 
 | Query Param | Type | Allowed Values | Description |
-| :---------: | :--: | :------------- | :---------- |
+| :---------: | :--: | :-------------: | :---------- |
 | `id` | `int` | `1≤n` | **Optionally required** to define id for watering |
 
 ### Examples using curl
@@ -177,7 +177,7 @@ ___
 
 ## Get temp_hum data
 
-This REST endpoint is intended to get rows of data-stamps of the air temperature and humidity sensors.\
+This REST endpoint is intended to get rows of data-stamps of the air temperature and humidity sensors.
 
 ### Request
 
@@ -226,7 +226,7 @@ ___
 
 ## Get hum data
 
-some text #TODO
+This REST endpoint is intended to get rows of data-stamps of the soil humidity sensors.
 
 ### Request
 
@@ -250,7 +250,7 @@ GET /api/hum/get-data
 
 ```javascript
 {
-    "rows": array(rowid, date, h1, ..., h_avg)
+    "rows": array(date, h1, ..., h_avg)
 }
 ```
 
