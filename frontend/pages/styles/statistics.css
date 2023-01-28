@@ -265,29 +265,19 @@ input:checked + .slider:before {
 
 /*Footer*/
 
-.container_footer{
-    width:100%;
-    margin:0 auto;
-
-}
-
 footer {
-    display: flex;
-    border-top: 1px solid #e5e5e5;
 
     text-align: center;
-	padding: 1rem 0 0.5rem 0 ;
+	padding: .5rem 0 .5rem 0 ;
 	background: #000;
 	width:100%;
 	position: absolute;
     line-height: 2.5em;
-    width: 100%;
     bottom: 0px;
     left:0;
     right:0;
     background-color: #000;
     position:inline;
-
     min-width:1200px;
 }
 .hrefab{

@@ -108,12 +108,13 @@ body{
 /*Footer*/
 
 footer {
+
     text-align: center;
-	padding:.2rem 0 0 0 ;
+	padding: .5rem 0 .5rem 0 ;
 	background: #000;
 	width:100%;
 	position: absolute;
-    line-height: 3em;
+    line-height: 2.5em;
     bottom: 0px;
     left:0;
     right:0;
@@ -132,8 +133,8 @@ footer {
     font-size: 14px;
     color: #333;
     text-align: center;
-
 }
+
 
 /*intro*/
 

@@ -129,10 +129,9 @@ body{
 /*Footer*/
 
 footer {
-    border-top: 1px solid #e5e5e5;
 
     text-align: center;
-	padding: 1rem 0 0.5rem 0 ;
+	padding: .5rem 0 .5rem 0 ;
 	background: #000;
 	width:100%;
 	position: absolute;

@@ -105,7 +105,7 @@
           <h1>4</h1></div>
         <div class="off">
           <h1>OFF</h1></div>
-        <div class="switcher">
+        <div id="active4" class="switcher">
           <label class="switch">
             <input type="checkbox">
             <span class="slider"></span>
@@ -134,16 +134,4 @@
   </footer>
 
 </body>
-<script>
-  URL = "http://localhost:63342/api/hum/get-data?t=5M";
-
-  async function makeAPICall() {
-      const result = await fetch(URL)
-      result.json().then(data => {
-          console. log(data)
-      })
-  }
-
-  makeAPICall()
-</script>
 </html>

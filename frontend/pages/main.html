@@ -5,10 +5,11 @@
   <meta charset="UTF-8">
   <title>Title</title>
   <link rel="stylesheet" href="./styles/main.css">
+
 </head>
 
 <body>
-
+  <script type="module" src="main.js"></script>
   <header class="header">
     <div class="header_inner">
       <div class="header_logo">
@@ -47,7 +48,7 @@
         <div class="some_switcher">
           <div class="off">
             <h1>OFF</h1></div>
-          <label class="switch">
+          <label id="active" class="switch" onclick="">
             <input type="checkbox">
             <span class="slider"></span>
           </label>
@@ -65,7 +66,7 @@
         <div class="some_switcher">
           <div class="off">
             <h1>OFF</h1></div>
-          <label class="switch">
+          <label id="active_w" class="switch">
             <input type="checkbox">
             <span class="slider"></span>
           </label>
@@ -91,5 +92,4 @@
   </footer>
 
 </body>
-
 </html>

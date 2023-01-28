@@ -2,8 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2fd37370-2dbc-4d55-95a4-d3694b7ac021" name="Changes" comment="switchers">
+      <change afterPath="$PROJECT_DIR$/frontend/pages/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/utils/db/data.db" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/db/data.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/main.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/pages/statistics.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/statistics.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/styles/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/styles/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/styles/settings.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/styles/settings.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/pages/styles/statistics.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/styles/statistics.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,11 +52,61 @@
       <recent name="C:\Users\User\PycharmProjects\predprof_beta\frontend\pages" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\User\PycharmProjects\predprof_beta\frontend\pages\styles" />
       <recent name="C:\Users\User\PycharmProjects\predprof_beta\frontend\pages" />
+      <recent name="C:\Users\User\PycharmProjects\predprof_beta\frontend\pages\styles" />
       <recent name="C:\Users\User\PycharmProjects\predprof_beta\frontend" />
       <recent name="C:\Users\User\PycharmProjects\predprof_beta\frontend\img" />
     </key>
+  </component>
+  <component name="RunManager" selected="Python.main">
+    <configuration name="flask_server" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="predprof_beta" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/backend" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/backend/flask_server.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="predprof_beta" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.flask_server" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
