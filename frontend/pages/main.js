@@ -1,13 +1,35 @@
-let response_w = await fetch("http://localhost:5000/api/sensor/window/get-state");
-var window_state = false
-if (response_w.ok) {
-  let window = await response_w.json();
-  console.log(window.state);
-  if window.state == "close":
-    window_state = false;
-  else:
-    window_state = true;
-  console.log(window_state);
-} else {
-  alert("Ошибка HTTP: " + response.status);
-}
+//window
+const switchElement = document.getElementById("switch_wid");
+const url = "http://localhost:5000/api/sensor/window/get-state"
+const URL = "http://localhost:5000/api/sensor/window/change-state/"
+
+let switchState = "close";
+
+switchElement.addEventListener("click", function() {
+
+  if (switchState == "close") {
+    switchElement.setAttribute("data-state", "open");
+    switchState = "open";
+  } else {
+    switchElement.setAttribute("data-state", "close");
+    switchState = "close";
+  }
+
+  const data = { "state": switchState };
+
+  fetch(URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+    .then(response => {
+      if (response.ok) {
+        console.log("State posted successfully");
+      } else {
+        console.error("Failed to post state");
+      }
+    })
+    .catch(error => console.error(error));
+});
