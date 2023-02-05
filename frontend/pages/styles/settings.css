@@ -61,6 +61,10 @@ body{
 }
 
 .header_logo{
+    background-image: linear-gradient(to right, #00AFFF, #00FF5B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight:700;
     margin-left:20px;
     font-size: 30px;
     color: #fff;

@@ -2,9 +2,7 @@
 const switchElement = document.getElementById("switch_wid");
 const url = "http://localhost:5000/api/sensor/window/get-state"
 const URL = "http://localhost:5000/api/sensor/window/change-state/"
-
-let switchState = "close";
-
+var switchState = "close";
 switchElement.addEventListener("click", function() {
 
   if (switchState == "close") {
@@ -15,14 +13,12 @@ switchElement.addEventListener("click", function() {
     switchState = "close";
   }
 
-  const data = { "state": switchState };
 
-  fetch(URL, {
+  fetch(`http://localhost:5000/api/sensor/window/change-state/${switchState}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(data)
   })
     .then(response => {
       if (response.ok) {
@@ -32,4 +28,7 @@ switchElement.addEventListener("click", function() {
       }
     })
     .catch(error => console.error(error));
+
 });
+
+
