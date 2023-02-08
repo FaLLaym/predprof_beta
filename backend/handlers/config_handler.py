@@ -9,9 +9,9 @@ DEBUG_MODE = config["Debug"].getboolean("enabled")
 db_name = config["General"]["db-name"]
 db_update_frequency_per_minute = config["General"].getint("db-update-frequency-per-minute")
 
-preinstalled_temp_hum = config["Preinstalled"].getint("preinstalled-temp_hum")
-preinstalled_hum = config["Preinstalled"].getint("preinstalled-hum")
-preinstalled_watering = config["Preinstalled"].getint("preinstalled-watering")
+preinstalled_temp_hum = config["Preinstalled"].getint("preinstalled-temp_hum") or 4
+preinstalled_hum = config["Preinstalled"].getint("preinstalled-hum") or 6
+preinstalled_watering = config["Preinstalled"].getint("preinstalled-watering") or 6
 
 from ..handlers.sensors_handler import Sensor, SensorsPool
 sensors_pool = SensorsPool()
