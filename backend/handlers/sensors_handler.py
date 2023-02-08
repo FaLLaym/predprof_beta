@@ -1,7 +1,6 @@
 import requests
 import datetime
 from typing import (Literal, Optional)
-import re
 
 from ..utils.db_controller import (temp_hum_DB, hum_DB, events_DB)
 from ..utils import logger
@@ -227,7 +226,7 @@ class SensorsPool:
         Get temp_hum entries by period:
         
         Allowed examples of period format:
-        "30s", "1m", "1h", "3h", "12h", "3D", "1M", "1Y"
+        "30S", "1M", "1H", "3H", "12H", "3d", "1m", "1Y"
         """
         export = temp_hum_DB.get_data_in_period(period)
         if DEBUG_MODE: logger.debug(f"fetched {len(export)} rows from temp_hum in {period}")
@@ -253,7 +252,7 @@ class SensorsPool:
         Get hum entries by period:
         
         Allowed examples of period format:
-        "30s", "1m", "1h", "3h", "12h", "3D", "1M", "1Y"
+        "30S", "1M", "1H", "3H", "12H", "3d", "1m", "1Y"
         """
         export = hum_DB.get_data_in_period(period)
         if DEBUG_MODE: logger.debug(f"fetched {len(export)} rows from hum in {period}")
