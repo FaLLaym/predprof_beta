@@ -5,11 +5,11 @@
   <meta charset="UTF-8">
   <title>Title</title>
   <link rel="stylesheet" href="./styles/main.css">
-
+  <script type="module" src="main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 </head>
 
 <body>
-  <script type="module" src="main.js"></script>
   <header class="header">
     <div class="header_inner">
       <div class="header_logo">
@@ -24,74 +24,55 @@
     </div>
   </header>
 
-  <section class="section">
+  <main class="main">
+      <div class="row_1">
+          <div class="block">
+                <div class="title"> <h1>WINDOW</h1></div>
+                <div class="some_switcher">
+                  <div class="off"><h1>OFF</h1></div>
 
-    <div class="stat">
+                  <div id="switch_wid" class="switch">
+                    <input type="checkbox" id="toggle_wid" class="toggle">
+                    <label for="toggle_wid"></label>
+                  </div>
 
-    </div>
-
-    <div class="graphics">
-      <div class="graf graf1">
-
-      </div>
-      <div class="graf graf2">
-
-      </div>
-      <div class="graf graf3">
-
-      </div>
-    </div>
-
-    <div class="management">
-      <div class="container_switchers">
-        <div class="title"> <h1>WINDOW</h1></div>
-        <div class="some_switcher">
-          <div class="off">
-            <h1>OFF</h1></div>
-          <div id="switch_wid" class="switch">
-            <input type="checkbox" id="toggle_wid" class="toggle">
-            <label for="toggle_wid"></label>
+                  <div class="on"><h1>ON</h1></div>
+                </div>
           </div>
-          <div class="on">
-            <h1>ON</h1></div>
-        </div>
-        <div class="lst_opening">
-          <p>LAST OPENING</p>
-          <p id="last_open"></p>
-        </div>
 
-      </div>
-
-      <div class="container_switchers">
-          <p class="txt">3д</p>
-      </div>
-      <div class="container_switchers">
-        <div class="title"><h1>TOTAL HUM</h1></div>
-        <div class="some_switcher">
-          <div class="off">
-            <h1>OFF</h1></div>
-          <div id="switch_hum"  class="switch">
-            <input type="checkbox" id="toggle_hum"  class="toggle">
-            <label for="toggle_hum"></label>
+          <div class="graf">
+              <canvas id="myChart"></canvas>
           </div>
-          <div class="on">
-            <h1>ON</h1></div>
-        </div>
-        <p>LAST HUMMIDING</p>
-      </div>
-    </div>
 
-  </section>
+          <div class="block">
+                <div class="title"> <h1>TOTAL HUM</h1></div>
+                <div class="some_switcher">
+                  <div class="off"><h1>OFF</h1></div>
+
+                  <div id="switch_hum" class="switch">
+                    <input type="checkbox" id="toggle_hum" class="toggle">
+                    <label for="toggle_hum"></label>
+                  </div>
+
+                  <div class="on"><h1>ON</h1></div>
+                </div>
+          </div>
+      </div>
+      <div class="row_2">
+          <div class="graf"></div>
+          <div class="graf"></div>
+      </div>
+  </main>
+
 
   <footer id="footer">
-    <div class="container_footer">
-      <a class="hrefab" href="index.html">ABOUT</a>
+        <button class="emergency">EMERGENCY</button>
 
-      <span class="copyright">
+        <span class="copyright">
                 © 2023 GreenHouse by <a href="#"> John'sFishers</a>
-      </span>
+        </span>
 
-    </div>
+        <a class="hrefab" href="index.html">ABOUT</a>
   </footer>
 
 </body>
