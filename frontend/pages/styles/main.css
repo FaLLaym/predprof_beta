@@ -126,7 +126,12 @@ body{
     .active {
         background-size: 100% 5px;
     }
-
+    .off{
+        float:right;
+    }
+    .on{
+        float:left;
+    }
 
 /* Section */
 .main {
