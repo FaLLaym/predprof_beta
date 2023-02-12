@@ -210,10 +210,39 @@ footer {
     grid-column-gap: 15px;
     grid-row-gap: 12px;
 }
+.section-main_data{
+    margin:0px 20px;
+    margin-top:-20px;
+    padding-top:1%;
+    height:600px;
+    background:rgba(0, 0, 0, 0.65);
+    border:0px;
+    border-radius:20px;
+    display: grid;
+    grid-template-rows: 65% 20%;
+    grid-row-gap: 2%;
+    align-content: space-evenly;
+}
+.column{
+    display:grid;
+    grid-template-columns: 40% 40%;
+    justify-content: space-around;
+}
+.row{
+    display:grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-row-gap: 8%;
+}
 .block{
     text-align:center;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    padding-top:8%;
+}
+.block_data{
+    text-align:center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     padding-top:8%;
 }
 .btn{
@@ -244,12 +273,24 @@ footer {
  position: relative;
  width: var(--width-of-input);
 }
+
 /* styling of Input */
 .input {
  color: #fff;
  font-size: 1.6rem;
  background-color: transparent;
  width: 100%;
+ box-sizing: border-box;
+ padding-inline: 0.5em;
+ padding-block: 0.5em;
+ border: none;
+ border-bottom: var(--border-height) solid var(--border-before-color);
+}
+.input_data {
+ color: #fff;
+ font-size: 1.6rem;
+ background-color: transparent;
+ width: 90%;
  box-sizing: border-box;
  padding-inline: 0.5em;
  padding-block: 0.5em;
