@@ -102,8 +102,8 @@ var data_th_now = data_th.data;
 console.log(data_th);
 
 
-var ctx = document.getElementById('Chart_temp').getContext('2d');
-var myChart_temp = new Chart(ctx, {
+var ctx_t = document.getElementById('Chart_temp').getContext('2d');
+var myChart_temp = new Chart(ctx_t, {
     type: 'bar',
     data: {
         labels: ['1', '2', '3', '4', 'ср'],
@@ -129,10 +129,11 @@ var myChart_temp = new Chart(ctx, {
         }
     }
 });
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-var ctx = document.getElementById('Chart_hum').getContext('2d');
-var myChart_hum = new Chart(ctx, {
+var ctx_h = document.getElementById('Chart_hum').getContext('2d');
+var myChart_hum = new Chart(ctx_h, {
     type: 'bar',
     data: {
         labels: ['1', '2', '3', '4', 'ср'],
@@ -160,24 +161,21 @@ var myChart_hum = new Chart(ctx, {
 });
 
 setInterval(async function() {
-    const response_th = await fetch("http://localhost:5000/api/temp_hum/get-data?t=5M");
-    var data_th = await response_th.json();
-    var data_th_now = data_th.data;
-    console.log(data_th);
-
-    myChart_hum.update();
-    myChart_temp.update();
-    console.log("Всё ок, я обновил график влажности и температуры!");
-}, 150000);
-
+  const response_th = await fetch("http://localhost:5000/api/temp_hum/get-data?t=5M");
+  var data_th = await response_th.json();
+  myChart_temp.data.datasets[0].data = [data_th.data[0][1], data_th.data[0][2],data_th.data[0][3], data_th.data[0][4], data_th.data[0][9]];
+  myChart_temp.update();
+  myChart_hum.data.datasets[0].data = [data_th.data[0][5], data_th.data[0][6],data_th.data[0][7], data_th.data[0][8], data_th.data[0][10]];
+  myChart_hum.update();
+}, 15000);
 ////////////////////////////////////////////////////////////////////////////////////////////////
 const response_hb = await fetch("http://localhost:5000/api/hum/get-data");
 var data_hb = await response_hb.json();
 var data_hb_now = data_hb.data;
 console.log(data_hb);
 
-var ctx = document.getElementById('Chart_hb').getContext('2d');
-var myChart_hb = new Chart(ctx, {
+var ctx_hb = document.getElementById('Chart_hb').getContext('2d');
+var myChart_hb = new Chart(ctx_hb, {
     type: 'bar',
     data: {
         labels: ['1', '2', '3', '4', '5', '6', 'ср'],
@@ -206,12 +204,11 @@ var myChart_hb = new Chart(ctx, {
     }
 });
 setInterval(async function() {
-    const response_hb = await fetch("http://localhost:5000/api/hum/get-data");
-    var data_hb = await response_hb.json();
-    var data_hb_now = data_hb.data;
-    console.log(data_hb);
+  const response_hb = await fetch("http://localhost:5000/api/hum/get-data");
+  var data_hb = await response_hb.json();
+  var data_hb_now = data_hb.data;
 
-    myChart_hb.data.datasets[0].data = [data_hb.data[0][1], data_hb.data[0][2], data_hb.data[0][3], data_hb.data[0][4], data_hb.data[0][5], data_hb.data[0][6], data_hb.data[0][7]];
-    myChart_hb.update();
-    console.log("Всё ок, я обновил график влажности почвы!");
+
+  myChart_hb.data.datasets[0].data = [data_hb.data[0][1], data_hb.data[0][2], data_hb.data[0][3], data_hb.data[0][4], data_hb.data[0][5], data_hb.data[0][6], data_hb.data[0][7]];
+  myChart_hb.update();
 }, 150000);

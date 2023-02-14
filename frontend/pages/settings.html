@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <title>Title</title>
   <link rel="stylesheet" href="./styles/settings.css">
-  <script type="module" src="main.js"></script>
+  <script type="module" src="./js/settings.js"></script>
 </head>
 
 <body>
@@ -36,7 +36,7 @@
             <h1>T</h1>
             <div class="container-form">
               <div class="form">
-                <input id="input_T" class="input" placeholder="Type your data" required="" type="number" min="20" max="80">
+                <input id="input_T" class="input" placeholder="Type your data" required="" type="number" min="0" max="80">
                 <span class="input-border"></span>              </div>
             </div>
             <h1>°C</h1>
@@ -45,7 +45,7 @@
             <h1>H</h1>
             <div class="container-form">
               <div class="form">
-                <input id="input_H"  class="input" placeholder="Type your data" required="" type="number" min="20" max="80">
+                <input id="input_H"  class="input" placeholder="Type your data" required="" type="number" min="0" max="100">
                 <span class="input-border"></span>
               </div>
             </div>
@@ -55,7 +55,7 @@
             <h1>Hb</h1>
             <div class="container-form">
               <div class="form">
-                <input id="input_Hb" class="input" placeholder="Type your data" required="" type="number" min="20" max="80">
+                <input id="input_Hb" class="input" placeholder="Type your data" required="" type="number" min="0" max="100">
                 <span class="input-border"></span>
               </div>
             </div>
@@ -141,14 +141,13 @@
   </section>
 
   <footer id="footer">
-    <div class="container_footer">
-      <a class="hrefab" href="index.html">ABOUT</a>
+        <button id="emergency" class="emergency">EMERGENCY</button>
 
-      <span class="copyright">
+        <span class="copyright">
                 © 2023 GreenHouse by <a href="#"> John'sFishers</a>
-      </span>
+        </span>
 
-    </div>
+        <a class="hrefab" href="index.html">ABOUT</a>
   </footer>
 
 </body>

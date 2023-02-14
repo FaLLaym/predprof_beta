@@ -300,6 +300,16 @@ footer {
     text-align: center;
 
 }
+.emergency{
+    font-size: 20px;
+    float: left;
+    color: #FFF;
+    background-color:red;
+	margin-left: 20px;
+	margin-top:10px;
+	border: 0px;
+    border-radius: 20px;
+}
 
 
 
