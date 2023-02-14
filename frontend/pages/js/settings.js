@@ -41,6 +41,32 @@ document.getElementById("input_data").addEventListener("submit", function(event)
   console.log("T: " + T + "  " + "H: " + H+ "  "+ "Hb: " + Hb );
 });
 
+//////////////////////
+const form = document.querySelector('.section-main_data');
+
+form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const inputs = form.querySelectorAll('.input_data');
+    const data = [];
+
+    for (const input of inputs) {
+        data.push(input.value);
+    }
+    console.log(data);
+    const response = await fetch('http://localhost:5000/api/data', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data })
+    });
+
+    if (response.ok) {
+        const json = await response.json();
+        console.log(json);
+    } else {
+        console.error('Error:', response.statusText);
+    }
+});
 
 
 
