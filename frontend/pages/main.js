@@ -1,13 +1,12 @@
 //window
 const switchElement = document.getElementById("switch_wid");
-const switchElement_hum = document.getElementById("switch_hum");
 const url = "http://localhost:5000/api/sensor/window/get-state"
-const url_hum = "http://localhost:5000/api/sensor/total_hum/get-state"
 
 const response = await fetch(url);
 var data = await response.json();
 var switchState = data.state;
-console.log(switchState);
+console.log(`Window ${switchState}`);
+
 switchElement.addEventListener("change", function() {
 
   if (switchState == "close") {
@@ -27,7 +26,7 @@ switchElement.addEventListener("change", function() {
   })
     .then(response => {
       if (response.ok) {
-        console.log("State posted successfully");
+        console.log(`Window ${switchState}`);
       } else {
         console.error("Failed to post state");
       }
@@ -36,18 +35,23 @@ switchElement.addEventListener("change", function() {
 
 });
 
+
+///TOTAL HUM
+const switchElement_hum = document.getElementById("switch_hum");
+const url_hum = "http://localhost:5000/api/sensor/total_hum/get-state"
+
 const response_hum = await fetch(url_hum);
 var data_hum = await response_hum.json();
 var switchState_hum = data_hum.state;
-console.log(switchState_hum);
+console.log(`TOTAL_HUM ${switchState_hum}`);
 
 switchElement_hum.addEventListener("change", function() {
 
   if (switchState_hum == "off") {
-    switchElement_hum.setAttribute("data-state", "on");
+    switchElement_hum.setAttribute("data_hum-state", "on");
     switchState_hum = "on";
   } else {
-    switchElement_hum.setAttribute("data-state", "off");
+    switchElement_hum.setAttribute("data_hum-state", "off");
     switchState_hum = "off";
   }
 
@@ -60,7 +64,7 @@ switchElement_hum.addEventListener("change", function() {
   })
     .then(response_hum => {
       if (response_hum.ok) {
-        console.log("State posted successfully");
+        console.log(`TOTAL_HUM ${switchState_hum}`);
       } else {
         console.error("Failed to post state");
       }
@@ -92,44 +96,27 @@ hum_last_open.innerText = hum_lst_opening;
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-fetch("http://localhost:5000/api/temp_hum/get-data?t=5M")
-  .then(response => response.json())
-  .then(data => {
-    const responseData = data;
-    // use responseData as needed here
-  })
-  .catch(error => {
-    console.error('Error fetching data:', error);
-  });
 const response_th = await fetch("http://localhost:5000/api/temp_hum/get-data?t=5M");
-var data_th = await response.json();
+var data_th = await response_th.json();
 var data_th_now = data_th.data;
 console.log(data_th);
 
 
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
+var ctx = document.getElementById('Chart_temp').getContext('2d');
+var myChart_temp = new Chart(ctx, {
     type: 'bar',
     data: {
         labels: ['1', '2', '3', '4', 'ср'],
         datasets: [{
             label: 'temperature',
-            data: [12, 19, 3, 5, 2, 3],
+            data: [data_th.data[0][1], data_th.data[0][2],data_th.data[0][3], data_th.data[0][4], data_th.data[0][9]],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.8)',
-                'rgba(54, 162, 235, 0.8)',
-                'rgba(255, 206, 86, 0.8)',
-                'rgba(255, 255, 192, .8)',
-                'rgba(75, 192, 192, .8)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(75, 192, 192, 1)'
-            ],
-            borderWidth: 1
+                'rgba(240, 159, 200, 1)',
+                'rgba(198, 120, 164, 1)',
+                'rgba(243, 147, 126, 1)',
+                'rgba(245, 162, 102, 1)',
+                'rgba(215, 246, 199, 1)'
+            ]
         }]
     },
     options: {
@@ -142,3 +129,89 @@ var myChart = new Chart(ctx, {
         }
     }
 });
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+var ctx = document.getElementById('Chart_hum').getContext('2d');
+var myChart_hum = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['1', '2', '3', '4', 'ср'],
+        datasets: [{
+            label: 'Humidity',
+            data: [data_th.data[0][5], data_th.data[0][6],data_th.data[0][7], data_th.data[0][8], data_th.data[0][10]],
+            backgroundColor: [
+                'rgba(243, 147, 126, 1)',
+                'rgba(245, 162, 102, 1)',
+                'rgba(215, 246, 199, 1)',
+                'rgba(122, 183, 140, 1)',
+                'rgba(128, 228, 213, 1)'
+            ]
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+setInterval(async function() {
+    const response_th = await fetch("http://localhost:5000/api/temp_hum/get-data?t=5M");
+    var data_th = await response_th.json();
+    var data_th_now = data_th.data;
+    console.log(data_th);
+
+    myChart_hum.update();
+    myChart_temp.update();
+    console.log("Всё ок, я обновил график влажности и температуры!");
+}, 150000);
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+const response_hb = await fetch("http://localhost:5000/api/hum/get-data");
+var data_hb = await response_hb.json();
+var data_hb_now = data_hb.data;
+console.log(data_hb);
+
+var ctx = document.getElementById('Chart_hb').getContext('2d');
+var myChart_hb = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['1', '2', '3', '4', '5', '6', 'ср'],
+        datasets: [{
+            label: 'Soil Humidity',
+            data: [data_hb.data[0][1], data_hb.data[0][2], data_hb.data[0][3], data_hb.data[0][4], data_hb.data[0][5], data_hb.data[0][6], data_hb.data[0][7]],
+            backgroundColor: [
+                'rgba(240, 159, 200, 1)',
+                'rgba(198, 120, 164, 1)',
+                'rgba(243, 147, 126, 1)',
+                'rgba(245, 162, 102, 1)',
+                'rgba(215, 246, 199, 1)',
+                'rgba(122, 183, 140, 1)',
+                'rgba(128, 228, 213, 1)'
+            ]
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+setInterval(async function() {
+    const response_hb = await fetch("http://localhost:5000/api/hum/get-data");
+    var data_hb = await response_hb.json();
+    var data_hb_now = data_hb.data;
+    console.log(data_hb);
+
+    myChart_hb.data.datasets[0].data = [data_hb.data[0][1], data_hb.data[0][2], data_hb.data[0][3], data_hb.data[0][4], data_hb.data[0][5], data_hb.data[0][6], data_hb.data[0][7]];
+    myChart_hb.update();
+    console.log("Всё ок, я обновил график влажности почвы!");
+}, 150000);
