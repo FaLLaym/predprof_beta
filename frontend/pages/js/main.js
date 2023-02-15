@@ -47,12 +47,12 @@ console.log(`TOTAL_HUM ${switchState_hum}`);
 
 switchElement_hum.addEventListener("change", function() {
 
-  if (switchState_hum == "off") {
-    switchElement_hum.setAttribute("data_hum-state", "on");
+  if (switchState_hum.checked) {
     switchState_hum = "on";
+    console.log(`TOTAL_HUM ${switchState_hum}`);
   } else {
-    switchElement_hum.setAttribute("data_hum-state", "off");
     switchState_hum = "off";
+    console.log(`TOTAL_HUM ${switchState_hum}`);
   }
 
 
@@ -74,14 +74,14 @@ switchElement_hum.addEventListener("change", function() {
 });
 
 
-/**window last opening///
+
 const url_wlsc = "http://localhost:5000/api/sensor/window/last-state-change/open"
 const response_wlsc = await fetch(url_wlsc);
 var data_wlsc = await response_wlsc.json();
 var lst_open = data_wlsc.date;
 console.log(lst_open);
-last_open.innerText = lst_open;
-**/
+last_window_open.innerText = lst_open;
+
 
 /**humidity last opening///
 const url_hlsc = "http://localhost:5000/api/sensor/watering/last-state-change/"
@@ -89,7 +89,7 @@ const response_hlsc = await fetch(url_hlsc);
 var data_hlsc = await response_hlsc.json();
 var hum_lst_opening = data_hlsc.date;
 console.log(hum_lst_opening);
-hum_last_open.innerText = hum_lst_opening;
+last_thum_open.innerText = hum_lst_opening;
 
 **/
 

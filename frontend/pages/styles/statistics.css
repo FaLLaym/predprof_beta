@@ -187,19 +187,19 @@ body{
      background:rgba(0, 0, 0, 0.75);
      margin:10px;
      border-radius: 20px;
-     display: flex;
       flex-direction: column;
       align-items: center;
      display:grid;
-     grid-template-columns:25% 70%;
+     grid-template-columns: 15% 70%;
+     justify-items: center;
 }
 
 .some_switcher{
-    display: flex;
     align-items: center;
     text-align: center;
     display:grid;
-    grid-template-columns:25% 13% 30%;
+    grid-template-columns: repeat(3,1fr);
+    justify-items: center;
 
 }
 .title{
@@ -304,7 +304,7 @@ footer {
     font-size: 20px;
     float: left;
     color: #FFF;
-    background-color:red;
+    background-color:grey;
 	margin-left: 20px;
 	margin-top:10px;
 	border: 0px;

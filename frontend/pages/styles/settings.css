@@ -164,7 +164,7 @@ footer {
     font-size: 20px;
     float: left;
     color: #FFF;
-    background-color:red;
+    background-color:grey;
 	margin-left: 20px;
 	margin-top:10px;
 	border: 0px;
@@ -221,27 +221,28 @@ footer {
     grid-row-gap: 12px;
 }
 .section-main_data{
-    margin:0px 20px;
-    margin-top:-20px;
-    padding-top:1%;
-    height:600px;
-    background:rgba(0, 0, 0, 0.65);
-    border:0px;
-    border-radius:20px;
+    margin: 0px 20px;
+    margin-top: -20px;
+    padding-top: 0%;
+    height: 600px;
+    background: rgba(0, 0, 0, 0.65);
+    border: 0px;
+    border-radius: 20px;
     display: grid;
-    grid-template-rows: 65% 20%;
+    grid-template-rows: 75% 23%;
     grid-row-gap: 2%;
-    align-content: space-evenly;
+    align-content: center;
 }
 .column{
     display:grid;
     grid-template-columns: 40% 40%;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 .row{
-    display:grid;
+    display: grid;
     grid-template-rows: repeat(3, 1fr);
-    grid-row-gap: 8%;
+    grid-row-gap: 10%;
+    align-items: center;
 }
 .block{
     text-align:center;
@@ -298,9 +299,9 @@ footer {
 }
 .input_data {
  color: #fff;
- font-size: 1.6rem;
+ font-size: 1.4rem;
  background-color: transparent;
- width: 90%;
+ width: 80%;
  box-sizing: border-box;
  padding-inline: 0.5em;
  padding-block: 0.5em;

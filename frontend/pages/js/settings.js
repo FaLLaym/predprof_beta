@@ -11,9 +11,9 @@ document.getElementById("emergency").addEventListener("click", function(event) {
     var Hb = 0;
     console.log("T: " + T + "  " + "H: " + H+ "  "+ "Hb: " + Hb );
     console.log("emergency mode on");
-    btn.style.backgroundColor = "grey";
-  }else{
     btn.style.backgroundColor = "red";
+  }else{
+    btn.style.backgroundColor = "grey";
     mode = 'false'
     if (data_values.length != 0){
         T = data_values[0];

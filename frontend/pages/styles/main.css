@@ -137,37 +137,44 @@ body{
 .main {
         display:grid;
         grid-template-rows:1fr 1fr;
+        gap:2%;
         padding:5% 0;
         height:100%;
-        weight:50%;
 }
 .block{
-     padding-top:20%;
+     padding-top:10%;
      width:100%;
-     height:90%;
+     height:98%;
      background:rgba(0, 0, 0, 0.85);
      margin:10px;
      border-radius: 20px;
-     display: flex;
-      flex-direction: column;
-      align-items: center;
+     display: grid;
+     grid-template-rows: 15% 35% 30%;
+    justify-items: center;
+    align-items: start;
 }
 .graf{
-    padding-top:5%;
+     padding-top:3%;
      width:100%;
-     height:90%;
+     height:98%;
      background:rgba(0, 0, 0, 0.85);
      margin:10px;
      border-radius: 20px;
      display: flex;
      flex-direction: column;
      align-items: center;
+     justify-content: flex-start;
+}
+.lst{
+    margin-top:10%;
+    text-align: center;
 }
 .row_1{
     display:grid;
     grid-template-columns: 19% 40% 19%;
     gap:2%;
     justify-content: center;
+    align-items: center;
 }
 .row_2{
     justify-content: center;
@@ -175,6 +182,7 @@ body{
     display:grid;
     grid-template-columns: 40% 40%;
     gap:2%;
+    align-items: center;
 }
 canvas{
       max-width: 650px;
@@ -185,12 +193,12 @@ canvas{
 /*Switcher*/
 .some_switcher{
     margin-top:20px;
-    display: flex;
     justify-content: space-between;
     align-items: center;
     text-align: center;
     display:grid;
     grid-template-columns:repeat(3,1fr);
+    justify-items: center;
 
 }
 .switch {
@@ -289,7 +297,7 @@ footer {
     font-size: 20px;
     float: left;
     color: #FFF;
-    background-color:red;
+    background-color:gray;
 	margin-left: 20px;
 	margin-top:10px;
 	border: 0px;
