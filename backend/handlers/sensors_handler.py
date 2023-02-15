@@ -164,7 +164,7 @@ class WateringSensor(Sensor):
         if state is None:
             self.state ^= True
         else:
-            self.state = bool(state)
+            self.state = bool(_state)
 
         return 200
 
