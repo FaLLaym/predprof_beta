@@ -1,7 +1,8 @@
-*
-*:before,
-*:after{
+*, *:before, *:after {
     box-sizing: border-box;
+}
+div {
+    display: block;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -11,38 +12,56 @@ a{
     text-decoration: none;
     color:#fff;
 }
-*{
-    margin:0;
-    color:#fff;
-}
 
-html{
-    background: linear-gradient(to right, #0095D9, #00BE44) fixed;
-
-}
-body{
-    background: url("/frontend/img/greenhouse-enter.png") center fixed;
-    -webkit-background-size:cover;
-    background-size: cover;
-    background-repeat: no-repeat;
-}
 :root { font-family: 'Inter', sans-serif; }
 @supports (font-variation-settings: normal) {
   :root { font-family: 'Inter var', sans-serif; }
 }
 
+*{
+    margin:0;
+    color:#fff;
+}
+
+/* Intro */
+
+
+
+html{
+    background: linear-gradient(to right, #0095D9, #00BE44) fixed;
+}
+body{
+    height: 100vh;
+    margin:0;
+    width:100%;
+
+    background: url("/frontend/img/greenhouse-enter.png") center fixed;
+    -webkit-background-size:cover;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+
+
 
 /* Header */
 
 .header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     background: #000;
     line-height: 3em;
     width:100%;
+    position:absolute;
+    z-index:1000;
     min-width:1200px;
 }
+
+.header_inner{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+}
+
 .header_logo{
     background-image: linear-gradient(to right, #00AFFF, #00FF5B);
     -webkit-background-clip: text;

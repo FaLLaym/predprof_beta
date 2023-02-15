@@ -139,6 +139,7 @@ body{
         grid-template-rows:1fr 1fr;
         gap:2%;
         padding:5% 0;
+        padding-top:3.5%;
         height:100%;
 }
 .block{
@@ -165,8 +166,15 @@ body{
      align-items: center;
      justify-content: flex-start;
 }
+.title_graf{
+    font-size:20px;
+}
 .lst{
     margin-top:10%;
+    font-size:30px;
+    text-align: center;
+}
+.last_time{
     text-align: center;
 }
 .updatetime, #current_data_t, #current_data_h, #current_data_hb{
@@ -174,6 +182,7 @@ body{
     font-size: 20px;
     color:gray;
 }
+
 .row_1{
     display:grid;
     grid-template-columns: 19% 40% 19%;
