@@ -15,10 +15,11 @@ document.getElementById("emergency").addEventListener("click", function(event) {
   }else{
     btn.style.backgroundColor = "grey";
     mode = 'false'
-    if (data_values.length != 0){
-        T = data_values[0];
-        H = data_values[1];
-        Hb = data_values[2];
+    if (sessionStorage.getItem("T") != 0){
+        T = sessionStorage.getItem("T");
+        H = sessionStorage.getItem("H");
+        Hb = sessionStorage.getItem("H");
+
     }else{
         T = 0;
         H = 0;
@@ -35,12 +36,12 @@ document.getElementById("input_data").addEventListener("submit", function(event)
   var T = document.getElementById("input_T").value;
   var H = document.getElementById("input_H").value;
   var Hb = document.getElementById("input_Hb").value;
-  data_values.push(T);
-  data_values.push(H);
-  data_values.push(Hb);
+  sessionStorage.setItem("T", T);
+  sessionStorage.setItem("H", H);
+  sessionStorage.setItem("H", Hb);
+
   console.log("T: " + T + "  " + "H: " + H+ "  "+ "Hb: " + Hb );
 });
-
 //////////////////////
 const form = document.querySelector('.section-main_data');
 

@@ -1,3 +1,11 @@
+///window last opening///
+const url_wlsc = "http://localhost:5000/api/sensor/window/last-state-change/open"
+const response_wlsc = await fetch(url_wlsc);
+var data_wlsc = await response_wlsc.json();
+var lst_open = data_wlsc.date;
+console.log(lst_open);
+last_window_open.innerText = lst_open.split('.')[0];
+
 //window
 const switchElement = document.getElementById("switch_wid");
 const url = "http://localhost:5000/api/sensor/window/get-state"
@@ -17,7 +25,6 @@ switchElement.addEventListener("change", function() {
     switchState = "close";
   }
 
-
   fetch(`http://localhost:5000/api/sensor/window/change-state/${switchState}`, {
     method: "POST",
     headers: {
@@ -27,6 +34,7 @@ switchElement.addEventListener("change", function() {
     .then(response => {
       if (response.ok) {
         console.log(`Window ${switchState}`);
+
       } else {
         console.error("Failed to post state");
       }
@@ -73,14 +81,6 @@ switchElement_hum.addEventListener("change", function() {
 
 });
 
-
-
-const url_wlsc = "http://localhost:5000/api/sensor/window/last-state-change/open"
-const response_wlsc = await fetch(url_wlsc);
-var data_wlsc = await response_wlsc.json();
-var lst_open = data_wlsc.date;
-console.log(lst_open);
-last_window_open.innerText = lst_open.split(' ')[0].split('.')[0];
 
 
 /**humidity last opening///
