@@ -6,6 +6,7 @@
   <title>Title</title>
   <link rel="stylesheet" href="./styles/statistics.css">
   <script type="module" src="./js/settings.js"></script>
+  <script type="module" src="./js/statistics.js"></script>
 </head>
 
 <body>
@@ -25,30 +26,34 @@
   </header>
 
   <main class="main">
-    <div class="row">
-      <div class="block">
-        <div class="table">
+      <div class="block_tables">
+          <div  class="title">
+              <h1>ТЕМПЕРАТУРА И ВЛАЖНОСТЬ</h1>
+              <form name="f1">
+                <select name="town" id="s1">
+                  <option value="t&h"> T&h </option>
+                  <option value="hb">hb</option>
+                </select>
+              </form>
+          </div>
+      </div>
+      <div class="block_managment">
+          <h1 class=" ">ПОЛИВ БОРОЗДОК</h1>
 
-        </div>
-        <div class="state_bar">
+            <div class="state_bar">
                 <div class="title"> <h1>1</h1></div>
                 <div class="some_switcher">
                   <div class="off"><h1>OFF</h1></div>
 
-                  <div id="switch_wid" class="switch">
+                  <div id="switch_1" class="switch">
                     <input type="checkbox" id="toggle_1" class="toggle">
                     <label for="toggle_1"></label>
                   </div>
 
                   <div class="on"><h1>ON</h1></div>
                 </div>
-        </div>
-      </div>
-      <div class="block">
-        <div class="table">
-
-        </div>
-        <div class="state_bar">
+            </div>
+            <div class="state_bar">
                 <div class="title"> <h1>2</h1></div>
                 <div class="some_switcher">
                   <div class="off"><h1>OFF</h1></div>
@@ -60,13 +65,8 @@
 
                   <div class="on"><h1>ON</h1></div>
                 </div>
-        </div>
-      </div>
-      <div class="block">
-        <div class="table">
-
-        </div>
-        <div class="state_bar">
+            </div>
+            <div class="state_bar">
                 <div class="title"> <h1>3</h1></div>
                 <div class="some_switcher">
                   <div class="off"><h1>OFF</h1></div>
@@ -78,15 +78,8 @@
 
                   <div class="on"><h1>ON</h1></div>
                 </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="block">
-        <div class="table">
-
-        </div>
-        <div class="state_bar">
+            </div>
+            <div class="state_bar">
                 <div class="title"> <h1>4</h1></div>
                 <div class="some_switcher">
                   <div class="off"><h1>OFF</h1></div>
@@ -98,13 +91,8 @@
 
                   <div class="on"><h1>ON</h1></div>
                 </div>
-        </div>
-      </div>
-      <div class="block">
-        <div class="table">
-
-        </div>
-        <div class="state_bar">
+            </div>
+            <div class="state_bar">
                 <div class="title"> <h1>5</h1></div>
                 <div class="some_switcher">
                   <div class="off"><h1>OFF</h1></div>
@@ -116,13 +104,8 @@
 
                   <div class="on"><h1>ON</h1></div>
                 </div>
-        </div>
-      </div>
-      <div class="block">
-        <div class="table">
-
-        </div>
-        <div class="state_bar">
+            </div>
+            <div class="state_bar">
                 <div class="title"> <h1>6</h1></div>
                 <div class="some_switcher">
                   <div class="off"><h1>OFF</h1></div>
@@ -134,9 +117,9 @@
 
                   <div class="on"><h1>ON</h1></div>
                 </div>
-        </div>
+            </div>
+
       </div>
-    </div>
   </main>
 
   <footer id="footer">
