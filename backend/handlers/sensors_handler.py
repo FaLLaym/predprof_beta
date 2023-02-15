@@ -58,7 +58,7 @@ class TotalHumSensor(Sensor):
         _state = (1 if state == "on" else 0) if state else (1 if self.get_state()^True else 0)
         request_params = {
             "X-Auth-Token": AUTH_TOKEN,
-            "state": int(state) or (1 if self.get_state() else 0) # type: ignore
+            "state": int(_state) or (1 if self.get_state() else 0) # type: ignore
         }
 
         response: requests.Response = requests.patch(
