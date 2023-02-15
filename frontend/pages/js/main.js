@@ -8,16 +8,19 @@ async function fetchAndSetLastWindowOpen() {
 }
 fetchAndSetLastWindowOpen()
 
-/**humidity last opening///
-const response_hlsc = await fetch("http://localhost:5000/api/sensor/watering/last-state-change/on");
-var data_hlsc = await response_hlsc.json();
-var hum_lst_opening = data_hlsc.date;
-console.log(hum_lst_opening);
-last_thum_open.innerText = hum_lst_opening;
-**/
+///humidity last opening///
+async function fetchAndSetLastTotalHumOpen() {
+    const response_hlsc = await fetch("http://localhost:5000/api/sensor/total_hum/last-state-change/on");
+    var data_hlsc = await response_hlsc.json();
+    var hum_lst_opening = data_hlsc.date;
+    console.log(hum_lst_opening);
+    last_thum_open.innerText = hum_lst_opening;
+}
+fetchAndSetLastTotalHumOpen()
+
 
 //window
-const switchElement = document.getElementById("switch_wid");
+const switchElement_t = document.getElementById("switch_wid");
 const toggle_wid = document.getElementById("toggle_wid");
 const url = "http://localhost:5000/api/sensor/window/get-state"
 
@@ -29,16 +32,17 @@ if (switchState == "close") {
     toggle_wid.checked = false;
   } else {
     toggle_wid.checked = true;
+    last_window_open.innerText = "IT'S OPEN NOW";
   }
 
-switchElement.addEventListener("change", function() {
+switchElement_t.addEventListener("change", function() {
 
   if (switchState == "close") {
-    switchElement.setAttribute("data-state", "open");
+    switchElement_t.setAttribute("data-state", "open");
     switchState = "open";
-
+    last_window_open.innerText = "IT'S OPEN NOW";
   } else {
-    switchElement.setAttribute("data-state", "close");
+    switchElement_t.setAttribute("data-state", "close");
     switchState = "close";
     fetchAndSetLastWindowOpen()
   }
@@ -106,6 +110,5 @@ switchElement_hum.addEventListener("change", function() {
     .catch(error => console.error(error));
 
 });
-
 
 
