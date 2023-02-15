@@ -80,7 +80,7 @@ const response_wlsc = await fetch(url_wlsc);
 var data_wlsc = await response_wlsc.json();
 var lst_open = data_wlsc.date;
 console.log(lst_open);
-last_window_open.innerText = lst_open;
+last_window_open.innerText = lst_open.split(' ')[0].split('.')[0];
 
 
 /**humidity last opening///
@@ -100,7 +100,7 @@ const response_th = await fetch("http://localhost:5000/api/temp_hum/get-data?t=5
 var data_th = await response_th.json();
 var data_th_now = data_th.data;
 console.log(data_th);
-
+current_data_t.innerText = data_th.data[0][0].split(' ')[1].split('.')[0];
 
 var ctx_t = document.getElementById('Chart_temp').getContext('2d');
 var myChart_temp = new Chart(ctx_t, {
@@ -131,6 +131,7 @@ var myChart_temp = new Chart(ctx_t, {
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
+current_data_h.innerText = data_th.data[0][0].split(' ')[1].split('.')[0];
 
 var ctx_h = document.getElementById('Chart_hum').getContext('2d');
 var myChart_hum = new Chart(ctx_h, {
@@ -167,12 +168,15 @@ setInterval(async function() {
   myChart_temp.update();
   myChart_hum.data.datasets[0].data = [data_th.data[0][5], data_th.data[0][6],data_th.data[0][7], data_th.data[0][8], data_th.data[0][10]];
   myChart_hum.update();
+  current_data_t.innerText = data_th.data[0][0].split(' ')[1].split('.')[0];
+  current_data_h.innerText = data_th.data[0][0].split(' ')[1].split('.')[0];
 }, 15000);
 ////////////////////////////////////////////////////////////////////////////////////////////////
 const response_hb = await fetch("http://localhost:5000/api/hum/get-data");
 var data_hb = await response_hb.json();
 var data_hb_now = data_hb.data;
 console.log(data_hb);
+current_data_hb.innerText = data_hb.data[0][0].split(' ')[1].split('.')[0];
 
 var ctx_hb = document.getElementById('Chart_hb').getContext('2d');
 var myChart_hb = new Chart(ctx_hb, {
@@ -207,7 +211,7 @@ setInterval(async function() {
   const response_hb = await fetch("http://localhost:5000/api/hum/get-data");
   var data_hb = await response_hb.json();
   var data_hb_now = data_hb.data;
-
+  current_data_hb.innerText = data_hb.data[0][1].split(' ')[0];
 
   myChart_hb.data.datasets[0].data = [data_hb.data[0][1], data_hb.data[0][2], data_hb.data[0][3], data_hb.data[0][4], data_hb.data[0][5], data_hb.data[0][6], data_hb.data[0][7]];
   myChart_hb.update();

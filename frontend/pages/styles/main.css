@@ -169,6 +169,11 @@ body{
     margin-top:10%;
     text-align: center;
 }
+.updatetime, #current_data_t, #current_data_h, #current_data_hb{
+    display:inline-block;
+    font-size: 20px;
+    color:gray;
+}
 .row_1{
     display:grid;
     grid-template-columns: 19% 40% 19%;
