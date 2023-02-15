@@ -77,7 +77,7 @@ var switchState_hum = data_hum.state;
 console.log(`TOTAL_HUM ${switchState_hum}`);
 console.log(`Window ${switchState}`);
 
-if (switchElement_hum == "off") {
+if (switchState_hum == "off") {
     toggle_hum.checked = false;
   } else {
     toggle_hum.checked = true;
@@ -94,7 +94,7 @@ switchElement_hum.addEventListener("change", function() {
   }
 
 
-  fetch(`http://localhost:5000/api/sensor/total_hum/${switchState_hum}`, {
+  fetch(`http://localhost:5000/api/sensor/total_hum/change-state/${switchState_hum}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
