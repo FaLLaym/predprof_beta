@@ -1,19 +1,32 @@
 const s = document.getElementById('s1');
-const options = [ 't&h', 'hb' ];
+const options = [
+  {
+    name: 't&h',
+    url: 'http://localhost:5000/api/temp_hum/get-data?t=5M',
+    columns: [
+      'date', 't1', 't2', 't3', 't4', 'h1', 'h2', 'h3', 'h4', 't_avg', 'h_avg'
+    ]
+  },
+  {
+    name: 'hb',
+    url: 'http://localhost:5000/api/hum/get-data',
+    columns: [
+      'date', 'hb1', 'hb2', 'hb3', 'hb4', 'hb5', 'hb6', 'hb_avg'
+    ]
+  }
+];
 
-let grid = null;
+let grid;
 
 async function renderGrid(data, columns) {
-  if (grid !== null && columns) {
+  if (grid) {
     grid.updateConfig({
       columns: columns,
       data: data,
     }).forceRender();
   } else {
     grid = new gridjs.Grid({
-      columns: [
-        'date', 't1', 't2', 't3', 't4', 'h1', 'h2', 'h3', 'h4', 't_avg', 'h_avg'
-      ],
+      columns: columns,
       data: data,
       pagination: {
         limit: 15
@@ -22,36 +35,22 @@ async function renderGrid(data, columns) {
   }
 }
 
-const columns_th=['date', 't1', 't2', 't3', 't4', 'h1', 'h2', 'h3', 'h4', 't_avg', 'h_avg'];
-const columns_hb=['date', 'hb1', 'hb2', 'hb3', 'hb4', 'hb5', 'hb6', 'hb_avg'];
-
-options.forEach(async (element, key) => {
-  if (element === 't&h') {
-    const response = await fetch("http://localhost:5000/api/temp_hum/get-data?t=5M");
-    const data = await response.json();
-    const data_table = data.data.slice(0, 75);
-    renderGrid(data_table,columns_th);
-    // Periodic data updates
-    setInterval(async function() {
-        const response = await fetch("http://localhost:5000/api/temp_hum/get-data?t=5M");
-        const data = await response.json();
-        const data_table = data.data;
-        renderGrid(data_table);
-    }, 150000);
-  }
-  if (element === 'hb') {
-    const response_hb = await fetch('http://localhost:5000/api/hum/get-data');
-    const data_hb = await response_hb.json();
-    const data_table_hb = data_hb.data.slice(0, 30);
-    renderGrid(data_table_hb,columns_hb);
-    // Periodic data updates
-    setInterval(async function() {
-        const response_hb = await fetch('http://localhost:5000/api/hum/get-data');
-        const data_hb = await response_hb.json();
-        const data_table_hb = data_hb.data.slice(0, 30);
-        renderGrid(data_table_hb,columns_hb);
-    }, 150000);
-  }
+s.addEventListener('change', async () => {
+  const selectedOption = options.find(option => option.name === s.value);
+  const response = await fetch(selectedOption.url);
+  const data = await response.json();
+  const data_table = data.data.slice(0, selectedOption.name === 't&h' ? 75 : 30);
+  renderGrid(data_table, selectedOption.columns);
 });
 
+// Initial load
+s.dispatchEvent(new Event('change'));
 
+// Periodic data updates
+setInterval(async function() {
+  const selectedOption = options.find(option => option.name === s.value);
+  const response = await fetch(selectedOption.url);
+  const data = await response.json();
+  const data_table = data.data;
+  renderGrid(data_table, selectedOption.columns);
+}, 15000);
