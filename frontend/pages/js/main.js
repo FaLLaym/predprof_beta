@@ -14,7 +14,7 @@ async function fetchAndSetLastTotalHumOpen() {
     var data_hlsc = await response_hlsc.json();
     var hum_lst_opening = data_hlsc.date;
     console.log(hum_lst_opening);
-    last_thum_open.innerText = hum_lst_opening;
+    last_thum_open.innerText = hum_lst_opening.split('.')[0];
 }
 fetchAndSetLastTotalHumOpen()
 
@@ -75,7 +75,6 @@ const response_hum = await fetch(url_hum);
 var data_hum = await response_hum.json();
 var switchState_hum = data_hum.state;
 console.log(`TOTAL_HUM ${switchState_hum}`);
-console.log(`Window ${switchState}`);
 
 if (switchState_hum == "off") {
     toggle_hum.checked = false;
@@ -85,16 +84,10 @@ if (switchState_hum == "off") {
 
 switchElement_hum.addEventListener("change", function() {
 
-  if (switchState_hum.checked) {
+  if (switchState_hum == "off") {
     switchState_hum = "on";
     console.log(`TOTAL_HUM ${switchState_hum}`);
-  } else {
-    switchState_hum = "off";
-    console.log(`TOTAL_HUM ${switchState_hum}`);
-  }
-
-
-  fetch(`http://localhost:5000/api/sensor/total_hum/change-state/${switchState_hum}`, {
+    fetch(`http://localhost:5000/api/sensor/total_hum/change-state/on`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -103,11 +96,32 @@ switchElement_hum.addEventListener("change", function() {
     .then(response_hum => {
       if (response_hum.ok) {
         console.log(`TOTAL_HUM ${switchState_hum}`);
+        last_thum_open.innerText = "IT'S OPEN NOW";
       } else {
         console.error("Failed to post state");
       }
     })
     .catch(error => console.error(error));
+
+  } else {
+    switchState_hum = "off";
+    console.log(`TOTAL_HUM ${switchState_hum}`);
+    fetch(`http://localhost:5000/api/sensor/total_hum/change-state/off`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+  })
+    .then(response_hum => {
+      if (response_hum.ok) {
+        console.log(`TOTAL_HUM ${switchState_hum}`);
+        fetchAndSetLastTotalHumOpen()
+      } else {
+        console.error("Failed to post state");
+      }
+    })
+    .catch(error => console.error(error));
+  }
 
 });
 
