@@ -80,6 +80,7 @@ if (switchState_hum == "off") {
     toggle_hum.checked = false;
   } else {
     toggle_hum.checked = true;
+    last_thum_open.innerText = "IT'S OPEN NOW";
   }
 
 switchElement_hum.addEventListener("change", function() {

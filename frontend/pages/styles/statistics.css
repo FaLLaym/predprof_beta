@@ -141,7 +141,17 @@ body{
 }
 
 
-
+/* Table */
+#wrapper{
+    width:90%;
+    height:80%;
+    margin:0 auto;
+    padding-top:1%;
+}
+.gridjs *, .gridjs :after, .gridjs :before {
+    box-sizing: border-box;
+    color: black;
+}
 
 /* Section */
 .main {
@@ -162,7 +172,7 @@ body{
 }
 .block_tables{
      width:100%;
-     height:110%;
+     height:105%;
      background:rgba(0, 0, 0, 0.85);
      margin:10px;
      border-radius: 20px;

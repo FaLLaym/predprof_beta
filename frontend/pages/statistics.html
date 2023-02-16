@@ -5,8 +5,7 @@
   <meta charset="UTF-8">
   <title>Title</title>
   <link rel="stylesheet" href="./styles/statistics.css">
-  <script type="module" src="./js/settings.js"></script>
-  <script type="module" src="./js/statistics.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -29,13 +28,16 @@
       <div class="block_tables">
           <div  class="title">
               <h1>ТЕМПЕРАТУРА И ВЛАЖНОСТЬ</h1>
-              <form name="f1">
-                <select name="town" id="s1">
+
+              <select name="town" id="s1">
                   <option value="t&h"> T&h </option>
                   <option value="hb">hb</option>
-                </select>
+              </select>
               </form>
           </div>
+
+          <div id="wrapper"></div>
+
       </div>
       <div class="block_managment">
           <h1 class=" ">ПОЛИВ БОРОЗДОК</h1>
@@ -120,6 +122,10 @@
             </div>
 
       </div>
+      <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>
+      <script type="module" src="./js/settings.js"></script>
+      <script type="module" src="./js/statistics.js"></script>
+      <script type="module" src="./js/tables.js"></script>
   </main>
 
   <footer id="footer">
