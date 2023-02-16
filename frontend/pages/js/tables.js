@@ -39,7 +39,7 @@ s.addEventListener('change', async () => {
   const selectedOption = options.find(option => option.name === s.value);
   const response = await fetch(selectedOption.url);
   const data = await response.json();
-  const data_table = data.data.slice(0, selectedOption.name === 't&h' ? 75 : 30);
+  const data_table = data.data.slice(0, selectedOption.name === 't&h' ? 78 : 30);
   var arr = new Array(data_table.length);
   for (var i = 0; i < arr.length; i++) {
       arr[i] = new Array(data_table[0].length);
@@ -68,7 +68,7 @@ setInterval(async function() {
   const response = await fetch(selectedOption.url);
   const data = await response.json();
   console.log(data);
-  const data_table = data.data.slice(0, selectedOption.name === 't&h' ? 75 : 30);
+  const data_table = data.data.slice(0, selectedOption.name === 't&h' ? 78 : 30);
   var arr = new Array(data_table.length);
   for (var i = 0; i < arr.length; i++) {
       arr[i] = new Array(data_table[0].length);
