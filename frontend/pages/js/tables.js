@@ -29,7 +29,7 @@ async function renderGrid(data, columns) {
       columns: columns,
       data: data,
       pagination: {
-        limit: 6
+        limit: 13
       },
     }).render(document.getElementById("wrapper"));
   }
@@ -40,7 +40,23 @@ s.addEventListener('change', async () => {
   const response = await fetch(selectedOption.url);
   const data = await response.json();
   const data_table = data.data.slice(0, selectedOption.name === 't&h' ? 75 : 30);
-  renderGrid(data_table, selectedOption.columns);
+  var arr = new Array(data_table.length);
+  for (var i = 0; i < arr.length; i++) {
+      arr[i] = new Array(data_table[0].length);
+      for (var j = 0; j < data_table[i].length; j++) {
+        if (j == 0) {
+          var splitResult = data_table[i][j].split(' ');
+          if (splitResult.length >= 2) {
+            arr[i][j] = splitResult[1].split('.')[0].replace(/-/g, ':');
+          } else {
+            arr[i][j] = data_table[i][j];
+          }
+        } else {
+          arr[i][j] = data_table[i][j];
+        }
+      }
+  }
+  renderGrid(arr, selectedOption.columns);
 });
 
 // Initial load
@@ -51,6 +67,24 @@ setInterval(async function() {
   const selectedOption = options.find(option => option.name === s.value);
   const response = await fetch(selectedOption.url);
   const data = await response.json();
+  console.log(data);
   const data_table = data.data.slice(0, selectedOption.name === 't&h' ? 75 : 30);
-  renderGrid(data_table, selectedOption.columns);
+  var arr = new Array(data_table.length);
+  for (var i = 0; i < arr.length; i++) {
+      arr[i] = new Array(data_table[0].length);
+      for (var j = 0; j < data_table[i].length; j++) {
+        if (j == 0) {
+          var splitResult = data_table[i][j].split(' ');
+          if (splitResult.length >= 2) {
+            arr[i][j] = splitResult[1].split('.')[0].replace(/-/g, ':');
+          } else {
+            arr[i][j] = data_table[i][j];
+          }
+        } else {
+          arr[i][j] = data_table[i][j];
+        }
+      }
+  }
+  console.log(arr);
+  renderGrid(arr, selectedOption.columns);
 }, 15000);

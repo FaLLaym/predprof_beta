@@ -2,10 +2,6 @@ let btn = document.querySelector(".emergency");
 let mode = 'false';
 let data_values = new Array();
 
-const elements = document.getElementsByTagName('*');
-const logo = document.getElementsByTagName('.header_logo');
-const html = document.querySelector('html');
-
 document.getElementById("emergency").addEventListener("click", function(event) {
   event.preventDefault();
   if (mode == "false"){
@@ -16,21 +12,18 @@ document.getElementById("emergency").addEventListener("click", function(event) {
     console.log("T: " + T + "  " + "H: " + H+ "  "+ "Hb: " + Hb );
     console.log("emergency mode on");
     btn.style.backgroundColor = "red";
-    /**
+
     for (let i = 0; i < elements.length; i++) {
         elements[i].style.color = 'red';
     }
-    logo.style.backgroundImage = 'linear-gradient(to right, #FF0000, #000000)';
-    headerLogo.style.webkitBackgroundClip = 'text';
-    headerLogo.style.webkitTextFillColor = 'transparent';
-    html.style.background = 'linear-gradient(to right, #FF0000, #000000)';
-    **/
+
+    document.body.className = 'body_emergency';
   }else{
     btn.style.backgroundColor = "grey";
     for (let i = 0; i < elements.length; i++) {
         elements[i].style.color = 'white';
     }
-
+    document.body.className = 'body';
     mode = 'false'
     if (sessionStorage.getItem("T") != 0){
         T = sessionStorage.getItem("T");
