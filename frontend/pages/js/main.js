@@ -37,6 +37,7 @@ if (switchState == "close") {
 
 switchElement_t.addEventListener("change", function() {
 
+
   if (switchState == "close") {
     switchElement_t.setAttribute("data-state", "open");
     switchState = "open";

@@ -29,7 +29,7 @@ async function renderGrid(data, columns) {
       columns: columns,
       data: data,
       pagination: {
-        limit: 15
+        limit: 6
       },
     }).render(document.getElementById("wrapper"));
   }
@@ -51,6 +51,6 @@ setInterval(async function() {
   const selectedOption = options.find(option => option.name === s.value);
   const response = await fetch(selectedOption.url);
   const data = await response.json();
-  const data_table = data.data;
+  const data_table = data.data.slice(0, selectedOption.name === 't&h' ? 75 : 30);
   renderGrid(data_table, selectedOption.columns);
 }, 15000);
