@@ -1,8 +1,18 @@
-let btn = document.querySelector(".emergency");
 let mode = 'false';
 let data_values = new Array();
-
-document.getElementById("emergency").addEventListener("click", function(event) {
+var checkbox = document.getElementById("inpLock");
+var label = document.querySelector(".btn-lock");
+var txt = document.getElementById("emergency_text_header");
+var mode_storage = sessionStorage.getItem("mode");
+if(mode_storage=='null'){
+    checkbox.checked = 'true';
+    mode = 'true';
+}else{
+    checkbox.checked = 'false';
+    mode = 'false';
+}
+// добавляем обработчик события onchange
+checkbox.addEventListener("change", function() {
   event.preventDefault();
   if (mode == "false"){
     mode = 'true'
@@ -11,19 +21,11 @@ document.getElementById("emergency").addEventListener("click", function(event) {
     var Hb = 999;
     console.log("T: " + T + "  " + "H: " + H+ "  "+ "Hb: " + Hb );
     console.log("emergency mode on");
-    btn.style.backgroundColor = "red";
-
-    for (let i = 0; i < elements.length; i++) {
-        elements[i].style.color = 'red';
-    }
-
+    txt.innerText = "EMERGENCY MODE";
     document.body.className = 'body_emergency';
   }else{
-    btn.style.backgroundColor = "grey";
-    for (let i = 0; i < elements.length; i++) {
-        elements[i].style.color = 'white';
-    }
     document.body.className = 'body';
+    txt.innerText = "";
     mode = 'false'
     if (sessionStorage.getItem("T") != 0){
         T = sessionStorage.getItem("T");
