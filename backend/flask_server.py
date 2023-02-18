@@ -200,7 +200,7 @@ class TempHum:
                     if not type(t) in (None, int, float): 
                         abort(Response("Wrong \"t\" data datatype", status=400))
 
-                export["t"] = temps
+                export["temp"] = temps
 
             if "h" in content:
                 hums = content["h"]
@@ -211,7 +211,7 @@ class TempHum:
                     if not type(h) in (None, int, float):
                         abort(Response("Wrong \"h\" data datatype", status=400))
 
-                export["h"] = hums
+                export["hum"] = hums
 
             t_avg = None
             if "t_avg" in content:
@@ -225,7 +225,7 @@ class TempHum:
                 h_avg = content["h_avg"]
                 if not type(h_avg) in (None, int, float):
                     abort(Response("Wrong \"h_avg\" data datatype", status=400))
-                export["t_avg"] = h_avg
+                export["h_avg"] = h_avg
 
             db_controller.temp_hum_DB.add_entry(**export)
             if DEBUG_MODE: logger.debug("added custom entry to temp_hum")
@@ -304,14 +304,14 @@ class Hum:
                     if not type(h) in (None, int, float):
                         abort(Response("Wrong \"h\" data datatype", status=400))
 
-                export["h"] = hums
+                export["hum"] = hums
 
             h_avg = None
             if "h_avg" in content:
                 h_avg = content["h_avg"]
                 if not type(h_avg) in (None, int, float):
                     abort(Response("Wrong \"h_avg\" data datatype", status=400))
-                export["t_avg"] = h_avg
+                export["h_avg"] = h_avg
 
             db_controller.hum_DB.add_entry(**export)
             if DEBUG_MODE: logger.debug("added custom entry to hum")
