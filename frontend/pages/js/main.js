@@ -1,11 +1,50 @@
+var toggle_hum = document.getElementById("toggle_hum");
+var toggle_wid = document.getElementById("toggle_wid");
 Chart.defaults.global.legend.display = false;
 
+let T = sessionStorage.getItem("T");
+let H = sessionStorage.getItem("H");
+
+
+if (T === null) {
+  T = 0;
+}
+if (H === null) {
+  H = 999;
+}
+
+console.log("T = "+ T);
+console.log("H = "+ H);
+
+//console.log(data_th);
 const response_th = await fetch("http://localhost:5000/api/temp_hum/get-data?t=5M");
 var data_th = await response_th.json();
 var data_th_now = data_th.data;
 console.log(data_th);
 current_data_t.innerText = data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[0]+':'+data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[1]+":"+data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[2];
-
+async function IsAbleHT(data_th_now) {
+    if (T < data_th_now[0][9]){
+        toggle_wid.disabled = false;
+        console.log("wid Is able")
+    }else{
+        toggle_wid.disabled = true;
+        if (toggle_wid.checked = true){
+            toggle_wid.checked = false;
+        }
+        console.log("wid Is disable")
+    }
+    if (H > data_th_now[0][10]){
+        toggle_hum.disabled = false;
+        console.log("hum Is able")
+    }else{
+        toggle_hum.disabled = true;
+        if (toggle_hum.checked = true){
+            toggle_hum.checked = false;
+        }
+        console.log("hum Is disable")
+    }
+}
+IsAbleHT(data_th_now)
 var ctx_t = document.getElementById('Chart_temp').getContext('2d');
 var myChart_temp = new Chart(ctx_t, {
     type: 'bar',
@@ -69,6 +108,7 @@ var myChart_hum = new Chart(ctx_h, {
 setInterval(async function() {
   const response_th = await fetch("http://localhost:5000/api/temp_hum/get-data?t=5M");
   var data_th = await response_th.json();
+  var data_th_now = data_th.data;
   myChart_temp.data.datasets[0].data = [data_th.data[0][1], data_th.data[0][2],data_th.data[0][3], data_th.data[0][4], data_th.data[0][9]];
   myChart_temp.update();
   myChart_hum.data.datasets[0].data = [data_th.data[0][5], data_th.data[0][6],data_th.data[0][7], data_th.data[0][8], data_th.data[0][10]];
@@ -76,7 +116,7 @@ setInterval(async function() {
   let time = data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[0]+':'+data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[1]+":"+data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[2];
   current_data_h.innerText = time;
   current_data_t.innerText = time;
-
+  IsAbleHT(data_th_now)
 
 }, 15000);
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -85,7 +125,6 @@ var data_hb = await response_hb.json();
 var data_hb_now = data_hb.data;
 console.log(data_hb);
 current_data_hb.innerText = data_hb.data[0][0].split(' ')[1].split('.')[0].split('-')[0]+':'+data_hb.data[0][0].split(' ')[1].split('.')[0].split('-')[1]+":"+data_hb.data[0][0].split(' ')[1].split('.')[0].split('-')[2];
-
 
 var ctx_hb = document.getElementById('Chart_hb').getContext('2d');
 var myChart_hb = new Chart(ctx_hb, {
@@ -128,10 +167,6 @@ setInterval(async function() {
 
 
 
-var T = sessionStorage.getItem("T");
-var H = sessionStorage.getItem("H");
-var Hb = sessionStorage.getItem("H");
-
 ///window last opening///
 async function fetchAndSetLastWindowOpen() {
   const response_wlsc = await fetch("http://localhost:5000/api/sensor/window/last-state-change/open");
@@ -155,7 +190,6 @@ fetchAndSetLastTotalHumOpen()
 
 //window
 const switchElement_t = document.getElementById("switch_wid");
-const toggle_wid = document.getElementById("toggle_wid");
 const url = "http://localhost:5000/api/sensor/window/get-state"
 
 const response = await fetch(url);
@@ -204,7 +238,6 @@ switchElement_t.addEventListener("change", function() {
 ///TOTAL HUM
 const switchElement_hum = document.getElementById("switch_hum");
 const url_hum = "http://localhost:5000/api/sensor/total_hum/get-state"
-const toggle_hum = document.getElementById("toggle_hum");
 
 const response_hum = await fetch(url_hum);
 var data_hum = await response_hum.json();

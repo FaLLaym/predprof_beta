@@ -1,3 +1,4 @@
+
 let mode = 'false';
 let data_values = new Array();
 var checkbox = document.getElementById("inpLock");
@@ -67,10 +68,16 @@ try{
             data.push(input.value);
         }
         console.log(data);
-        const response = await fetch('http://localhost:5000/api/data', {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ data })
+        const response = await fetch('http://localhost:5000/api/hum/add-data', {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "date":new Date().toISOString(),
+                "h":data,
+                "h_avg":null,
+            })
         });
 
         if (response.ok) {
