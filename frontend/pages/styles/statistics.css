@@ -136,6 +136,7 @@ body{
 
 /* Table */
 #wrapper{
+    z-index:1;
     width:90%;
     height:80%;
     margin:0 auto;
@@ -144,6 +145,13 @@ body{
 .gridjs *, .gridjs :after, .gridjs :before {
     box-sizing: border-box;
     color: black;
+}
+.loading{
+    position:absolute;
+    z-index:0;
+    top: 35%;
+    left: 30%;
+    transform: translate(-30%, -30%);
 }
 
 /* Section */

@@ -4,13 +4,16 @@ Chart.defaults.global.legend.display = false;
 
 let T = sessionStorage.getItem("T");
 let H = sessionStorage.getItem("H");
-
+let mode = sessionStorage.getItem("mode");
 
 if (T === null) {
   T = 0;
 }
 if (H === null) {
   H = 999;
+}
+if (mode === null) {
+  mode = false;
 }
 
 console.log("T = "+ T);
@@ -23,25 +26,32 @@ var data_th_now = data_th.data;
 console.log(data_th);
 current_data_t.innerText = data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[0]+':'+data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[1]+":"+data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[2];
 async function IsAbleHT(data_th_now) {
-    if (T < data_th_now[0][9]){
-        toggle_wid.disabled = false;
-        console.log("wid Is able")
-    }else{
-        toggle_wid.disabled = true;
-        if (toggle_wid.checked = true){
-            toggle_wid.checked = false;
-        }
-        console.log("wid Is disable")
+    mode = sessionStorage.getItem("mode");
+    if (mode === null) {
+      mode = false;
     }
-    if (H > data_th_now[0][10]){
-        toggle_hum.disabled = false;
-        console.log("hum Is able")
-    }else{
-        toggle_hum.disabled = true;
-        if (toggle_hum.checked = true){
-            toggle_hum.checked = false;
+    if (mode == 'false'){
+        if (T < data_th_now[0][9]){
+            toggle_wid.disabled = false;
+            console.log("wid Is able")
+        }else{
+            toggle_wid.disabled = true;
+            toggle_wid.checked = false;
+
+            console.log("wid Is disable")
         }
-        console.log("hum Is disable")
+        if (H > data_th_now[0][10]){
+            toggle_hum.disabled = false;
+            console.log("hum Is able")
+        }else{
+            toggle_hum.disabled = true;
+            toggle_hum.checked = false;
+
+            console.log("hum Is disable")
+        }
+    }else{
+        toggle_wid.disabled = false;
+        toggle_hum.disabled = false;
     }
 }
 IsAbleHT(data_th_now)
@@ -204,7 +214,7 @@ if (switchState == "close") {
   }
 
 switchElement_t.addEventListener("change", function() {
-
+  IsAbleHT(data_th_now);
 
   if (switchState == "close") {
     switchElement_t.setAttribute("data-state", "open");
@@ -252,7 +262,7 @@ if (switchState_hum == "off") {
   }
 
 switchElement_hum.addEventListener("change", function() {
-
+  IsAbleHT(data_th_now);
   if (switchState_hum == "off") {
     switchState_hum = "on";
     console.log(`TOTAL_HUM ${switchState_hum}`);
