@@ -1,12 +1,15 @@
-from flask import Flask, Response, abort, request
-from flask_restful import Api, Resource
-from typing import Literal, Any
+from flask import (Flask, Response, abort, request)
+from flask_restful import (Api, Resource)
+from typing import (Literal, Any)
 import re
 import json
+import datetime
 
 from .handlers import sensors_pool
-from .handlers.config_handler import (preinstalled_watering as pre_w)
+from .handlers.config_handler import (preinstalled_watering as pre_w, preinstalled_temp_hum as pre_th, preinstalled_hum as pre_h)
 from .handlers.config_handler import DEBUG_MODE
+
+from .utils import (db_controller, logger)
 
 app = Flask(__name__)
 api = Api(app)
@@ -128,8 +131,8 @@ api.add_resource(SensorState.ChangeState, "/api/sensor/<string:sensor>/change-st
 api.add_resource(SensorState.LastStateChange, "/api/sensor/<string:sensor>/last-state-change/<string:state>", endpoint="last_state_change")
 
 
-class Data:
-    class TempHum(Resource):
+class TempHum:
+    class GetData(Resource):
         def get(self) -> Response:
             args = request.args
 
@@ -162,8 +165,78 @@ class Data:
 
             return Response(json.dumps(export), status=200, mimetype="application/json")
 
+    class AddData(Resource):
+        def post(self) -> Response:
+            if not request.is_json:
+                abort(Response("No JSON data in request", status=400))
 
-    class Hum(Resource):
+            try:
+                content = json.loads(str(request.get_data(), encoding="utf-8").replace("'", "\""))
+                print(content)
+            except:
+                abort(Response("Wrong JSON", status=400))
+
+            if not content:
+                abort(Response("JSON is empty", status=400))
+
+            export = {"date": None, "temp": [], "hum": [], "t_avg": None, "h_avg": None}
+
+            if not "date" in content:
+                abort(Response("JSON must contain \"date\" field", status=400))
+
+            try:
+                export["date"] = datetime.datetime.strptime(content["date"], '%Y-%m-%dT%H:%M:%S.%fZ')
+            except:
+                abort(Response(r"Wrong date format, should be %Y-%m-%dT%H:%M:%S.%fZ", status=400))
+
+            if "t" in content:
+                temps = content["t"]
+                if not len(temps) == 0 and len(temps) != pre_th:
+                    abort(Response("\"t\" needs a full list of data or NULL", status=400))
+
+                for t in temps:
+                    if not type(t) in (None, int, float): 
+                        abort(Response("Wrong \"t\" data datatype", status=400))
+
+                export["t"] = temps
+
+            if "h" in content:
+                hums = content["h"]
+                if not len(hums) == 0 and len(hums) != pre_th:
+                    abort(Response("\"h\" needs a full list of data or NULL", status=400))
+
+                for h in hums:
+                    if not type(h) in (None, int, float):
+                        abort(Response("Wrong \"h\" data datatype", status=400))
+
+                export["h"] = hums
+
+            t_avg = None
+            if "t_avg" in content:
+                t_avg = content["t_avg"]
+                if not type(t_avg) in (None, int, float):
+                    abort(Response("Wrong \"t_avg\" data datatype", status=400))
+                export["t_avg"] = t_avg
+
+            h_avg = None
+            if "h_avg" in content:
+                h_avg = content["h_avg"]
+                if not type(h_avg) in (None, int, float):
+                    abort(Response("Wrong \"h_avg\" data datatype", status=400))
+                export["t_avg"] = h_avg
+
+            db_controller.temp_hum_DB.add_entry(**export)
+            if DEBUG_MODE: logger.debug("added custom entry to temp_hum")
+
+            return Response("success", status=200)
+
+
+api.add_resource(TempHum.GetData, "/api/temp_hum/get-data", endpoint="get_temp_hum_data")
+api.add_resource(TempHum.AddData, "/api/temp_hum/add-data", endpoint="add_temp_hum_data")
+
+
+class Hum:
+    class GetData(Resource):
         def get(self) -> Response:
             args = request.args
 
@@ -196,9 +269,56 @@ class Data:
 
             return Response(json.dumps(export), status=200, mimetype="application/json")
 
+    class AddData(Resource):
+        def post(self) -> Response:
+            if not request.is_json:
+                abort(Response("No JSON data in request", status=400))
 
-api.add_resource(Data.TempHum, "/api/temp_hum/get-data", endpoint="get_temp_hum_data")
-api.add_resource(Data.Hum, "/api/hum/get-data", endpoint="get_hum_data")
+            try:
+                content = json.loads(str(request.get_data(), encoding="utf-8").replace("'", "\""))
+                print(content)
+            except:
+                abort(Response("Wrong JSON", status=400))
+
+            if not content:
+                abort(Response("JSON is empty", status=400))
+
+            export = {"date": None, "hum": [], "h_avg": None}
+
+            if not "date" in content:
+                abort(Response("JSON must contain \"date\" field", status=400))
+
+            try:
+                export["date"] = datetime.datetime.strptime(content["date"], '%Y-%m-%dT%H:%M:%S.%fZ')
+            except:
+                abort(Response(r"Wrong date format, should be %Y-%m-%dT%H:%M:%S.%fZ", status=400))
+
+            if "h" in content:
+                hums = content["h"]
+                if not len(hums) == 0 and len(hums) != pre_h:
+                    abort(Response("\"h\" needs a full list of data or NULL", status=400))
+
+                for h in hums:
+                    if not type(h) in (None, int, float):
+                        abort(Response("Wrong \"h\" data datatype", status=400))
+
+                export["h"] = hums
+
+            h_avg = None
+            if "h_avg" in content:
+                h_avg = content["h_avg"]
+                if not type(h_avg) in (None, int, float):
+                    abort(Response("Wrong \"h_avg\" data datatype", status=400))
+                export["t_avg"] = h_avg
+
+            db_controller.hum_DB.add_entry(**export)
+            if DEBUG_MODE: logger.debug("added custom entry to hum")
+
+            return Response("success", status=200)
+
+
+api.add_resource(Hum.GetData, "/api/hum/get-data", endpoint="get_hum_data")
+api.add_resource(Hum.AddData, "/api/hum/add-data", endpoint="add_hum_data")
 
 
 def main() -> None:
