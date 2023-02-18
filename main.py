@@ -15,6 +15,7 @@ if __name__ == "__main__":
         parser_process.start()
         server.start()
         frontend_server.start()
+        print("Frontend server is running at: http://localhost:8081/frontend/pages/main.html")
         while 1:
             pass
     except KeyboardInterrupt:
