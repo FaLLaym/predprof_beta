@@ -1,6 +1,6 @@
 import datetime
 from dateutil.relativedelta import relativedelta
-from typing import Literal, Tuple, Optional
+from typing import (Literal, Tuple, Optional, Union, List)
 import re
 
 from .logger import logger
@@ -11,18 +11,21 @@ from sqlite3 import OperationalError
 
 class temp_hum_DB:
     @staticmethod
-    def add_entry(temp: list[float | None], hum: list[float | None], t_avg: (float | None) = None, h_avg: (float | None) = None) -> None:
-        filtered_temp: list[float] = list(filter(lambda x: x is not None, temp))  # type: ignore
-        t_avg = t_avg or (0.0 if not len(filtered_temp) > 0 else round(sum(filtered_temp) / len(filtered_temp), 2))
-        filtered_hum: list[float] = list(filter(lambda x: x is not None, hum))  # type: ignore
-        h_avg = h_avg or (0.0 if not len(filtered_hum) > 0 else round(sum(filtered_hum) / len(filtered_hum), 2))
+    def add_entry(temp: Optional[List[float]], hum: Optional[List[float]], t_avg: Optional[float] = None, h_avg: Optional[float] = None, date: Optional[datetime.datetime] = None) -> None:
+        filtered_temp: List[float] = list(filter(lambda x: x is not None, temp))  # type: ignore
+        t_avg = t_avg or (None if not len(filtered_temp) > 0 else round(sum(filtered_temp) / len(filtered_temp), 2))
+        filtered_hum: List[float] = list(filter(lambda x: x is not None, hum))  # type: ignore
+        h_avg = h_avg or (None if not len(filtered_hum) > 0 else round(sum(filtered_hum) / len(filtered_hum), 2))
+
+        temp.extend([None] * (pre_th-len(temp)))
+        hum.extend([None] * (pre_th-len(hum)))
 
         while 1: #UGLY
             try:
                 sql.execute(f"""INSERT INTO temp_hum (date, {','.join(map(lambda x: f"t{x}", range(1, pre_th+1)))},
                     {','.join(map(lambda x: f"h{x}", range(1, pre_th+1)))}, t_avg, h_avg) 
                     VALUES (?,{",".join(["?"]*pre_th)},{",".join(["?"]*pre_th)},?,?)""",
-                    [datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S.%f")[:23], *temp, *hum, t_avg, h_avg])
+                    [(date or datetime.datetime.now()).strftime("%Y-%m-%d %H-%M-%S.%f")[:23], *temp, *hum, t_avg, h_avg])
                 break
             except OperationalError:
                 pass
@@ -70,16 +73,16 @@ class temp_hum_DB:
 
 class hum_DB:
     @staticmethod
-    def add_entry(hum: list[float | None], h_avg: (float | None) = None) -> None:
-        filtered_hum: list[float] = list(
-            filter(lambda x: x is not None, hum))  # type: ignore
-        h_avg = h_avg or (0.0 if not len(
-            filtered_hum) > 0 else round(sum(filtered_hum) / len(filtered_hum), 2))
+    def add_entry(hum: List[Optional[float]], h_avg: List[Optional[float]] = None, date: Optional[datetime.datetime] = None) -> None:
+        filtered_hum: List[float] = list(filter(lambda x: x is not None, hum))  # type: ignore
+        h_avg = h_avg or (None if not len(filtered_hum) > 0 else round(sum(filtered_hum) / len(filtered_hum), 2))
+
+        hum.extend([None] * (pre_h-len(hum)))
 
         while 1: #UGLY
             try:
                 sql.execute(f"""INSERT INTO hum (date, {','.join(map(lambda x: f"h{x}", range(1, pre_h+1)))}, h_avg) VALUES (?,{",".join(["?"]*pre_h)},?)""",
-                    [datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S.%f")[:23], *hum, h_avg])
+                    [(date or datetime.datetime.now()).strftime("%Y-%m-%d %H-%M-%S.%f")[:23], *hum, h_avg])
                 break
             except OperationalError:
                 pass
@@ -127,7 +130,7 @@ class hum_DB:
 
 class events_DB:
     @staticmethod
-    def event_entry(sensor_name: Literal["window", "watering", "total_hum"] | str, state: str, id: (int | None) = None) -> None:
+    def event_entry(sensor_name: Union[Literal["window", "watering", "total_hum"], str], state: str, id: Optional[int] = None) -> None:
         if id: sensor_name += f"{id}"
 
         while 1: #UGLY
@@ -139,7 +142,7 @@ class events_DB:
         db.commit()
 
     @staticmethod
-    def last_date_of_event(sensor_name: Literal["window", "watering", "total_hum"] | str, state: str, id: (int | None) = None) -> Optional[datetime.datetime]:
+    def last_date_of_event(sensor_name: Union[Literal["window", "watering", "total_hum"], str], state: str, id: Optional[int] = None) -> Optional[datetime.datetime]:
         if id: sensor_name += f"{id}"
 
         date = sql.execute("SELECT date FROM events WHERE type = ? AND state_data = ? ORDER BY date DESC", [sensor_name, state]).fetchone()
