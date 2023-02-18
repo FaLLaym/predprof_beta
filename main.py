@@ -6,16 +6,18 @@ import front_server
 
 from multiprocessing import Process
 
+FRONTEND_SERVER_PORT = 8081
+
 if __name__ == "__main__":
     parser_process = Process(target=api_parser.main)
     server = Process(target=flask_server.main)
-    frontend_server = Process(target=front_server.main)
+    frontend_server = Process(target=front_server.main, args=(FRONTEND_SERVER_PORT,))
+    print(f"{'#'*80}\nFrontend server runs at: http://localhost:{FRONTEND_SERVER_PORT}/frontend/pages/index.html\n{'#'*80}")
 
     try:
         parser_process.start()
         server.start()
         frontend_server.start()
-        print("Frontend server is running at: http://localhost:8081/frontend/pages/main.html")
         while 1:
             pass
     except KeyboardInterrupt:
