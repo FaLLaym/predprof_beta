@@ -1,17 +1,17 @@
 from flask import (Flask, Response, abort, request)
 from flask_restful import (Api, Resource)
+from flask_cors import CORS
 from typing import (Literal, Any)
+import datetime
 import re
 import json
-import datetime
 
 from .handlers import sensors_pool
-from .handlers.config_handler import (preinstalled_watering as pre_w, preinstalled_temp_hum as pre_th, preinstalled_hum as pre_h)
+from .handlers.config_handler import (preinstalled_watering as pre_w)
 from .handlers.config_handler import DEBUG_MODE
 
-from .utils import (db_controller, logger)
-
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 
 class SensorState:
@@ -47,18 +47,23 @@ class SensorState:
         def post(self, sensor: Literal["window", "watering", "total_hum"], state: Literal["open", "close", "on", "off"]) -> Response:
             args = request.args
 
-            status = None
+            export = {}
+
             if sensor in "window":
                 if state not in ["open", "close"]:
                     abort(Response("Wrong state", status=400))
 
                 status = sensors_pool.change_sensor_state(sensor, state)
 
+                export["success"] = True if status == 200 else False
+
             elif sensor == "total_hum":
                 if state not in ["on", "off"]:
                     abort(Response("Wrong state", status=400))
 
                 status = sensors_pool.change_sensor_state(sensor, state)
+
+                export["success"] = True if status == 200 else False
 
             elif sensor == "watering":
                 if not "id" in args or args["id"] is None:
@@ -75,12 +80,15 @@ class SensorState:
                         raise IndexError
 
                     status = sensors_pool.change_sensor_state(sensor, state, id)
+
+                    export["success"] = True if status == 200 else False
+
                 except IndexError:
                     abort(Response("Unknown id", status=404))
             else:
                 abort(Response("Unknown sensor type", status=404))
             
-            return Response("Request passed with status {status}",status=status)
+            return Response(json.dumps(export), status=(200 if export["success"] else 500), mimetype="application/json")
     
 
     class LastStateChange(Resource):
@@ -131,7 +139,7 @@ api.add_resource(SensorState.ChangeState, "/api/sensor/<string:sensor>/change-st
 api.add_resource(SensorState.LastStateChange, "/api/sensor/<string:sensor>/last-state-change/<string:state>", endpoint="last_state_change")
 
 
-class TempHum:
+class TempHum():
     class GetData(Resource):
         def get(self) -> Response:
             args = request.args
@@ -140,11 +148,11 @@ class TempHum:
 
             if not "t" in args or args["t"] is None:
                 data = sensors_pool.get_data_temp_hum("1m")
-                export["data"] = data if data else "null"
-            elif re.match(r"^[\d]+[a-zA-Z]$", args["t"]):
+                export["rows"] = data if data else []
+            elif re.match(r"^[\d]+[SMHdmY]$", args["t"]):
                 try:
                     period_n = re.search(r"^[\d]+",args["t"])
-                    period_l = re.search(r"[a-zA-Z]$",args["t"])
+                    period_l = re.search(r"[SMHdmY]$",args["t"])
 
                     if not period_n or not period_l:
                         raise IndexError
@@ -152,11 +160,9 @@ class TempHum:
 
                     if not period_n.isdigit() or int(period_n) <= 0:
                         raise IndexError
-                    if period_l not in ["s", "m", "h", "D", "M", "Y"]:
-                        raise IndexError
 
                     data = sensors_pool.get_data_temp_hum(f"{period_n}{period_l}")
-                    export["data"] = data if data else "null"
+                    export["rows"] = data if data else []
                 except IndexError:
                     abort(Response("Wrong t param format", status=400))
 
@@ -170,72 +176,53 @@ class TempHum:
             if not request.is_json:
                 abort(Response("No JSON data in request", status=400))
 
-            try:
-                content = json.loads(str(request.get_data(), encoding="utf-8").replace("'", "\""))
-                print(content)
-            except:
-                abort(Response("Wrong JSON", status=400))
+            content = request.json
 
             if not content:
                 abort(Response("JSON is empty", status=400))
 
-            export = {"date": None, "temp": [], "hum": [], "t_avg": None, "h_avg": None}
+            export = {"date": None, "t": {}, "h": {}, "t_avg": None, "h_avg": None}
 
-            if not "date" in content:
+            if not hasattr(content, "date"):
                 abort(Response("JSON must contain \"date\" field", status=400))
 
-            try:
-                export["date"] = datetime.datetime.strptime(content["date"], '%Y-%m-%dT%H:%M:%S.%fZ')
-            except:
-                abort(Response(r"Wrong date format, should be %Y-%m-%dT%H:%M:%S.%fZ", status=400))
+            export["date"] = datetime.datetime.strptime(content["date"], '%Y-%m-%dT%H:%M:%S.%fZ')
 
-            if "t" in content:
-                temps = content["t"]
-                if not len(temps) == 0 and len(temps) != pre_th:
-                    abort(Response("\"t\" needs a full list of data or NULL", status=400))
+            for key, item in content.items(): #TODO add support for var of connected temp_hum sensors
+                if re.match(r"^t[1-6]$", key):
+                    if not isinstance(item, int):
+                        continue
+                    export["t"][key] = item
 
-                for t in temps:
-                    if not type(t) in (None, int, float): 
-                        abort(Response("Wrong \"t\" data datatype", status=400))
+                elif re.match(r"^h[1-6]$", key):
+                    if not isinstance(item, int):
+                        continue
+                    export["h"][key] = item
 
-                export["t"] = temps
+            if hasattr(content, "t_avg"):
+                export["t_avg"] = content["t_avg"]
+            else:
+                t: list = [temp for temp in export["t"].values()]
+                if t:
+                    export["t_avg"] = round(sum(t)/len(t), 2)
 
-            if "h" in content:
-                hums = content["h"]
-                if not len(hums) == 0 and len(hums) != pre_th:
-                    abort(Response("\"h\" needs a full list of data or NULL", status=400))
+            if hasattr(content, "h_avg"):
+                export["h_avg"] = content["h_avg"]
+            else:
+                h: list = [temp for temp in export["h"].values()]
+                if h:
+                    export["h_avg"] = round(sum(h)/len(h), 2)
 
-                for h in hums:
-                    if not type(h) in (None, int, float):
-                        abort(Response("Wrong \"h\" data datatype", status=400))
+            sensors_pool.update_temp_hum(export)
 
-                export["h"] = hums
-
-            t_avg = None
-            if "t_avg" in content:
-                t_avg = content["t_avg"]
-                if not type(t_avg) in (None, int, float):
-                    abort(Response("Wrong \"t_avg\" data datatype", status=400))
-                export["t_avg"] = t_avg
-
-            h_avg = None
-            if "h_avg" in content:
-                h_avg = content["h_avg"]
-                if not type(h_avg) in (None, int, float):
-                    abort(Response("Wrong \"h_avg\" data datatype", status=400))
-                export["t_avg"] = h_avg
-
-            db_controller.temp_hum_DB.add_entry(**export)
-            if DEBUG_MODE: logger.debug("added custom entry to temp_hum")
-
-            return Response("success", status=200)
+            return Response(status=200)
 
 
 api.add_resource(TempHum.GetData, "/api/temp_hum/get-data", endpoint="get_temp_hum_data")
 api.add_resource(TempHum.AddData, "/api/temp_hum/add-data", endpoint="add_temp_hum_data")
 
 
-class Hum:
+class Hum():
     class GetData(Resource):
         def get(self) -> Response:
             args = request.args
@@ -244,11 +231,11 @@ class Hum:
 
             if not "t" in args or args["t"] is None:
                 data = sensors_pool.get_data_hum("1m")
-                export["data"] = data if data else "null"
-            elif re.match(r"^[\d]+[a-zA-Z]$", args["t"]):
+                export["rows"] = data if data else []
+            elif re.match(r"^[\d]+[SMHdmY]$", args["t"]):
                 try:
                     period_n = re.search(r"^[\d]+",args["t"])
-                    period_l = re.search(r"[a-zA-Z]$",args["t"])
+                    period_l = re.search(r"[SMHdmY]$",args["t"])
 
                     if not period_n or not period_l:
                         raise IndexError
@@ -256,11 +243,9 @@ class Hum:
 
                     if not period_n.isdigit() or int(period_n) <= 0:
                         raise IndexError
-                    if period_l not in ["s", "m", "h", "D", "M", "Y"]:
-                        raise IndexError
 
                     data = sensors_pool.get_data_hum(f"{period_n}{period_l}")
-                    export["data"] = data if data else "null"
+                    export["rows"] = data if data else []
                 except IndexError:
                     abort(Response("Wrong t param format", status=400))
 
@@ -269,56 +254,8 @@ class Hum:
 
             return Response(json.dumps(export), status=200, mimetype="application/json")
 
-    class AddData(Resource):
-        def post(self) -> Response:
-            if not request.is_json:
-                abort(Response("No JSON data in request", status=400))
-
-            try:
-                content = json.loads(str(request.get_data(), encoding="utf-8").replace("'", "\""))
-                print(content)
-            except:
-                abort(Response("Wrong JSON", status=400))
-
-            if not content:
-                abort(Response("JSON is empty", status=400))
-
-            export = {"date": None, "hum": [], "h_avg": None}
-
-            if not "date" in content:
-                abort(Response("JSON must contain \"date\" field", status=400))
-
-            try:
-                export["date"] = datetime.datetime.strptime(content["date"], '%Y-%m-%dT%H:%M:%S.%fZ')
-            except:
-                abort(Response(r"Wrong date format, should be %Y-%m-%dT%H:%M:%S.%fZ", status=400))
-
-            if "h" in content:
-                hums = content["h"]
-                if not len(hums) == 0 and len(hums) != pre_h:
-                    abort(Response("\"h\" needs a full list of data or NULL", status=400))
-
-                for h in hums:
-                    if not type(h) in (None, int, float):
-                        abort(Response("Wrong \"h\" data datatype", status=400))
-
-                export["h"] = hums
-
-            h_avg = None
-            if "h_avg" in content:
-                h_avg = content["h_avg"]
-                if not type(h_avg) in (None, int, float):
-                    abort(Response("Wrong \"h_avg\" data datatype", status=400))
-                export["t_avg"] = h_avg
-
-            db_controller.hum_DB.add_entry(**export)
-            if DEBUG_MODE: logger.debug("added custom entry to hum")
-
-            return Response("success", status=200)
-
 
 api.add_resource(Hum.GetData, "/api/hum/get-data", endpoint="get_hum_data")
-api.add_resource(Hum.AddData, "/api/hum/add-data", endpoint="add_hum_data")
 
 
 def main() -> None:
