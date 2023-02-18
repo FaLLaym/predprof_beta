@@ -1,4 +1,5 @@
-
+var toggle_hum = document.getElementById("toggle_hum");
+var toggle_wid = document.getElementById("toggle_wid");
 let mode = 'false';
 let data_values = new Array();
 var checkbox = document.getElementById("inpLock");
@@ -24,6 +25,8 @@ checkbox.addEventListener("change", function() {
     console.log("emergency mode on");
     txt.innerText = "EMERGENCY MODE";
     document.body.className = 'body_emergency';
+    toggle_wid.disabled = false;
+    toggle_hum.disabled = false;
   }else{
     document.body.className = 'body';
     txt.innerText = "";

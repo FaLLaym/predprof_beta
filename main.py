@@ -1,3 +1,5 @@
+from flask import render_template
+
 from backend import api_parser
 from backend import flask_server
 

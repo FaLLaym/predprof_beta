@@ -39,7 +39,7 @@ body{
     background: linear-gradient(to right, rgba(0, 81, 118, 1), rgba(0, 75, 27, 1)) fixed;
 }
 .body{
-     background: url("/frontend/img/main.png") center fixed;
+     background: url("/frontend/img/greenhouse-enter.png") center fixed;
     -webkit-background-size:cover;
     background-size: cover;
     background-repeat: no-repeat;
