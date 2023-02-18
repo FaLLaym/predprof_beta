@@ -2,6 +2,7 @@ import datetime
 from dateutil.relativedelta import relativedelta
 from typing import (Literal, Tuple, Optional, Union, List)
 import re
+from time import sleep as wait
 
 from .logger import logger
 from ..handlers.db_init import (db, sql)
@@ -26,10 +27,10 @@ class temp_hum_DB:
                     {','.join(map(lambda x: f"h{x}", range(1, pre_th+1)))}, t_avg, h_avg) 
                     VALUES (?,{",".join(["?"]*pre_th)},{",".join(["?"]*pre_th)},?,?)""",
                     [(date or datetime.datetime.now()).strftime("%Y-%m-%d %H-%M-%S.%f")[:23], *temp, *hum, t_avg, h_avg])
+                db.commit()
                 break
             except OperationalError:
-                pass
-        db.commit()
+                wait(0.05)
 
     @staticmethod
     def get_data_in_period(period: str) -> list:
@@ -83,10 +84,10 @@ class hum_DB:
             try:
                 sql.execute(f"""INSERT INTO hum (date, {','.join(map(lambda x: f"h{x}", range(1, pre_h+1)))}, h_avg) VALUES (?,{",".join(["?"]*pre_h)},?)""",
                     [(date or datetime.datetime.now()).strftime("%Y-%m-%d %H-%M-%S.%f")[:23], *hum, h_avg])
+                db.commit()
                 break
             except OperationalError:
-                pass
-        db.commit()
+                wait(0.05)
 
     @staticmethod
     def get_data_in_period(period: str) -> list:
@@ -136,10 +137,10 @@ class events_DB:
         while 1: #UGLY
             try:
                 sql.execute("INSERT INTO events (date, type, state_data) VALUES (?,?,?)", [datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S.%f")[:23], sensor_name, state])
+                db.commit()
                 break
             except OperationalError:
-                pass
-        db.commit()
+                wait(0.05)
 
     @staticmethod
     def last_date_of_event(sensor_name: Union[Literal["window", "watering", "total_hum"], str], state: str, id: Optional[int] = None) -> Optional[datetime.datetime]:
