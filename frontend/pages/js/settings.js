@@ -89,9 +89,12 @@ try{
       sessionStorage.setItem("T", T);
       sessionStorage.setItem("H", H);
       sessionStorage.setItem("H", Hb);
-
+      event.target.reset();
       console.log("T: " + T + "  " + "H: " + H+ "  "+ "Hb: " + Hb );
+       alert("Лимитеры успешно установлены");
     });
+
+
     //////////////////////
     const form = document.querySelector('.section-main_data');
 
@@ -102,51 +105,33 @@ try{
         const data = [];
 
         for (const input of inputs) {
-            data.push(input.value);
+            console.log(parseInt(input.value));
+            data.push(parseInt(input.value)* 1.001);
+
         }
         console.log(data);
-        const response = await fetch('http://localhost:5000/api/hum/add-data', {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                "date":new Date().toISOString(),
-                "h":data,
-                "h_avg":null,
-            })
-        });
+        event.target.reset();
+        var today = new Date().toISOString();
+        fetch('http://localhost:5000/api/hum/add-data', {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            "date": today,
+            "h": data,
+            "h_avg": null,
+          }),
+        })
+          .then(response => {
+            if (!response.ok) {
+              /*console.error("Failed to post data");*/
+            }
+            alert("Данные успешно запиcаны в бд");
+            console.log('Данные успешно отправлены на сервер');
+          })
+          .catch(eerror => console.error(error));
 
-        if (response.ok) {
-            const json = await response.json();
-            console.log(json);
-        } else {
-            console.error('Error:', response.statusText);
-        }
     });
 }catch{console.log('its wrong page')}
 
-const response_hb = await fetch("http://localhost:5000/api/hum/get-data");
-var data_hb = await response_hb.json();
-var data_hb_now = data_hb.data;
-console.log(data_hb);
-/**
-async function IsAbleWindow() {
-  const response_hb = await fetch("http://localhost:5000/api/hum/get-data");  const data_wlsc = await response_wlsc.json();
-  var data_hb = await response_hb.json();
-  var data_hb_now = data_hb.data;
-  if
-  if(data_hb[0][9] > sessionStorage.getItem("T")){
-    toggle_wid.checked = false;
-    toggle_wid.disable = true;
-  }
-  if(data_hb[0][10] < H){
-    toggle_hum.checked = false;
-    toggle_hum.disable = true;
-  }
-}
-
-while(true){
-    IsAbleWindowAndTHum()
-}
-**/

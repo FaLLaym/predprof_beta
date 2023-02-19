@@ -2,17 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2fd37370-2dbc-4d55-95a4-d3694b7ac021" name="Changes" comment="switchers">
-      <change afterPath="$PROJECT_DIR$/frontend/pages/main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_1_main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_1_settings.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_2_main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/predprof_beta.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/predprof_beta.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/utils/db/data.db" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/db/data.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/index.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/pages/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/js/settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/js/settings.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/pages/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/settings.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/settings.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/pages/statistics.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/statistics.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/styles/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/styles/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/styles/settings.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/styles/settings.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/styles/statistics.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/styles/statistics.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +45,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/User/PycharmProjects/predprof_beta/frontend/pages/styles&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
 }</component>
   <component name="RecentsManager">
