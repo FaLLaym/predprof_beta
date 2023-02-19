@@ -174,7 +174,6 @@ class TempHum:
 
             try:
                 content = json.loads(str(request.get_data(), encoding="utf-8").replace("'", "\""))
-                print(content)
             except:
                 abort(Response("Wrong JSON", status=400))
 
@@ -197,7 +196,7 @@ class TempHum:
                     abort(Response("\"t\" needs a full list of data or NULL", status=400))
 
                 for t in temps:
-                    if not type(t) in (None, int, float): 
+                    if not type(t) in (None, int, float) and t is not None:
                         abort(Response("Wrong \"t\" data datatype", status=400))
 
                 export["temp"] = temps
@@ -208,20 +207,20 @@ class TempHum:
                     abort(Response("\"h\" needs a full list of data or NULL", status=400))
 
                 for h in hums:
-                    if not type(h) in (None, int, float):
+                    if not type(h) in (None, int, float) and h is not None:
                         abort(Response("Wrong \"h\" data datatype", status=400))
 
                 export["hum"] = hums
 
             if "t_avg" in content:
                 t_avg = content["t_avg"]
-                if not type(t_avg) in (None, int, float):
+                if not type(t_avg) in (None, int, float) and t_avg is not None:
                     abort(Response("Wrong \"t_avg\" data datatype", status=400))
                 export["t_avg"] = t_avg
 
             if "h_avg" in content:
                 h_avg = content["h_avg"]
-                if not type(h_avg) in (None, int, float):
+                if not type(h_avg) in (None, int, float) and h_avg is not None:
                     abort(Response("Wrong \"h_avg\" data datatype", status=400))
                 export["h_avg"] = h_avg
 
@@ -276,7 +275,6 @@ class Hum:
 
             try:
                 content = json.loads(str(request.get_data(), encoding="utf-8").replace("'", "\""))
-                print(content)
             except:
                 abort(Response("Wrong JSON", status=400))
 
@@ -299,14 +297,14 @@ class Hum:
                     abort(Response("\"h\" needs a full list of data or NULL", status=400))
 
                 for h in hums:
-                    if not type(h) in (None, int, float):
+                    if not type(h) in (None, int, float) and h is not None:
                         abort(Response("Wrong \"h\" data datatype", status=400))
 
                 export["hum"] = hums
 
             if "h_avg" in content:
                 h_avg = content["h_avg"]
-                if not type(h_avg) in (None, int, float):
+                if not type(h_avg) in (None, int, float) and h_avg is not None:
                     abort(Response("Wrong \"h_avg\" data datatype", status=400))
                 export["h_avg"] = h_avg
 
