@@ -15,35 +15,6 @@ if(mode_storage=='null'){
     checkbox.checked = 'false';
     mode = 'false';
 }
-async function IsAbleHT(data_th_now) {
-    mode = sessionStorage.getItem("mode");
-    if (mode === null) {
-      mode = false;
-    }
-    if (mode == 'false'){
-        if (T < data_th_now[0][9]){
-            toggle_wid.disabled = false;
-            console.log("wid Is able")
-        }else{
-            toggle_wid.disabled = true;
-            toggle_wid.checked = false;
-
-            console.log("wid Is disable")
-        }
-        if (H > data_th_now[0][10]){
-            toggle_hum.disabled = false;
-            console.log("hum Is able")
-        }else{
-            toggle_hum.disabled = true;
-            toggle_hum.checked = false;
-
-            console.log("hum Is disable")
-        }
-    }else{
-        toggle_wid.disabled = false;
-        toggle_hum.disabled = false;
-    }
-}
 
 // добавляем обработчик события onchange
 checkbox.addEventListener("change", function() {

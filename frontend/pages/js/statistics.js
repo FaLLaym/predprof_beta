@@ -25,3 +25,14 @@ switches.forEach((toggle, index) => {
     toggleSwitch(switchNumber, toggleState);
   });
 });
+
+const setSwitchStates = async () => {
+  for (let index = 1; index <= switches.length; index++) {
+    const response = await fetch(`http://localhost:5000/api/sensor/watering/get-state?id=${index}`);
+    const data = await response.json();
+    const switchState = data.state;
+    switches[index-1].checked = switchState === 'on';
+  }
+};
+
+setSwitchStates();

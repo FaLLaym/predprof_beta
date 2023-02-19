@@ -1,3 +1,4 @@
+/*
 const fetchMock = require('fetch-mock');
 
 // Import the code to be tested
@@ -80,3 +81,36 @@ describe('Chart rendering', () => {
 
   afterAll(() => {
     // Remove the
+*/
+var assert = require('assert');
+
+assert.throws(
+  function() {
+    throw new Error("Wrong value");
+  },
+  function(err) {
+    if ( (err instanceof Error) && /value/.test(err) ) {
+      return true;
+    }
+  },
+  "unexpected error"
+);
+
+function multiply(a, b) {
+  return a * b;
+}
+
+// примеры тестов
+describe('multiply', function() {
+  it('должна вернуть 6 для 2 * 3', function() {
+    assert.equal(multiply(2, 3), 6);
+  });
+
+  it('должна вернуть -12 для -2 * 6', function() {
+    assert.equal(multiply(-2, 6), -12);
+  });
+
+  it('должна вернуть 0 для 0 * 100', function() {
+    assert.equal(multiply(0, 100), 0);
+  });
+});
