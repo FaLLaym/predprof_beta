@@ -213,14 +213,12 @@ class TempHum:
 
                 export["hum"] = hums
 
-            t_avg = None
             if "t_avg" in content:
                 t_avg = content["t_avg"]
                 if not type(t_avg) in (None, int, float):
                     abort(Response("Wrong \"t_avg\" data datatype", status=400))
                 export["t_avg"] = t_avg
 
-            h_avg = None
             if "h_avg" in content:
                 h_avg = content["h_avg"]
                 if not type(h_avg) in (None, int, float):
@@ -306,7 +304,6 @@ class Hum:
 
                 export["hum"] = hums
 
-            h_avg = None
             if "h_avg" in content:
                 h_avg = content["h_avg"]
                 if not type(h_avg) in (None, int, float):
