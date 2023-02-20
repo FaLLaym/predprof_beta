@@ -2,28 +2,18 @@ var toggle_hum = document.getElementById("toggle_hum");
 var toggle_wid = document.getElementById("toggle_wid");
 Chart.defaults.global.legend.display = false;
 
-let T = sessionStorage.getItem("T");
-let H = sessionStorage.getItem("H");
-let mode = sessionStorage.getItem("mode");
+let T = sessionStorage.getItem("T") ||0;
+let H = sessionStorage.getItem("H")||999;
+let mode = sessionStorage.getItem("mode")|| false;
 
-if (T === null) {
-  T = 0;
-}
-if (H === null) {
-  H = 999;
-}
-if (mode === null) {
-  mode = false;
-}
 
 console.log("T = "+ T);
 console.log("H = "+ H);
-
-//console.log(data_th);
+console.log("mode = "+ mode);
 const response_th = await fetch("http://localhost:5000/api/temp_hum/get-data?t=5M");
 var data_th = await response_th.json();
 var data_th_now = data_th.data;
-console.log(data_th);
+//console.log(data_th);
 current_data_t.innerText = data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[0]+':'+data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[1]+":"+data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[2];
 async function IsAbleHT(data_th_now) {
     mode = sessionStorage.getItem("mode");
@@ -52,6 +42,7 @@ async function IsAbleHT(data_th_now) {
     }else{
         toggle_wid.disabled = false;
         toggle_hum.disabled = false;
+        return false;
     }
 }
 IsAbleHT(data_th_now)
@@ -132,7 +123,7 @@ setInterval(async function() {
 const response_hb = await fetch("http://localhost:5000/api/hum/get-data");
 var data_hb = await response_hb.json();
 var data_hb_now = data_hb.data;
-console.log(data_hb);
+//console.log(data_hb);
 current_data_hb.innerText = data_hb.data[0][0].split(' ')[1].split('.')[0].split('-')[0]+':'+data_hb.data[0][0].split(' ')[1].split('.')[0].split('-')[1]+":"+data_hb.data[0][0].split(' ')[1].split('.')[0].split('-')[2];
 
 var ctx_hb = document.getElementById('Chart_hb').getContext('2d');
@@ -174,14 +165,14 @@ setInterval(async function() {
   myChart_hb.update();
 }, 150000);
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///window last opening///
 async function fetchAndSetLastWindowOpen() {
   const response_wlsc = await fetch("http://localhost:5000/api/sensor/window/last-state-change/open");
   const data_wlsc = await response_wlsc.json();
   const lst_open = data_wlsc.date;
-  console.log(lst_open);
+  //console.log(lst_open);
   last_window_open.innerText = lst_open.split('.')[0];
 }
 fetchAndSetLastWindowOpen()
@@ -191,7 +182,7 @@ async function fetchAndSetLastTotalHumOpen() {
     const response_hlsc = await fetch("http://localhost:5000/api/sensor/total_hum/last-state-change/on");
     var data_hlsc = await response_hlsc.json();
     var hum_lst_opening = data_hlsc.date;
-    console.log(hum_lst_opening);
+    //console.log(hum_lst_opening);
     last_thum_open.innerText = hum_lst_opening.split('.')[0];
 }
 fetchAndSetLastTotalHumOpen()
@@ -213,8 +204,6 @@ if (switchState == "close") {
   }
 
 switchElement_t.addEventListener("change", function() {
-  IsAbleHT(data_th_now);
-
   if (switchState == "close") {
     switchElement_t.setAttribute("data-state", "open");
     switchState = "open";
@@ -261,7 +250,6 @@ if (switchState_hum == "off") {
   }
 
 switchElement_hum.addEventListener("change", function() {
-  IsAbleHT(data_th_now);
   if (switchState_hum == "off") {
     switchState_hum = "on";
     console.log(`TOTAL_HUM ${switchState_hum}`);
@@ -301,58 +289,4 @@ switchElement_hum.addEventListener("change", function() {
     .catch(error => console.error(error));
   }
 
-});
-describe('IsAbleHT', () => {
-  it('should disable humidity toggle when humidity is too high', () => {
-    // Arrange
-    const data_th_now = [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 90]]; // humidity is 90%
-    const toggle_hum = { disabled: false, checked: false };
-    const toggle_wid = { disabled: false, checked: false };
-    sessionStorage.setItem('mode', 'false');
-    sessionStorage.setItem('H', '80');
-
-    // Act
-    IsAbleHT(data_th_now);
-
-    // Assert
-    expect(toggle_hum.disabled).toBe(true);
-    expect(toggle_hum.checked).toBe(false);
-    expect(toggle_wid.disabled).toBe(false);
-    expect(toggle_wid.checked).toBe(false);
-  });
-
-  it('should disable wind toggle when temperature is too low', () => {
-    // Arrange
-    const data_th_now = [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 90]];
-    const toggle_hum = { disabled: false, checked: false };
-    const toggle_wid = { disabled: false, checked: false };
-    sessionStorage.setItem('mode', 'false');
-    sessionStorage.setItem('T', '10');
-
-    // Act
-    IsAbleHT(data_th_now);
-
-    // Assert
-    expect(toggle_wid.disabled).toBe(true);
-    expect(toggle_wid.checked).toBe(false);
-    expect(toggle_hum.disabled).toBe(false);
-    expect(toggle_hum.checked).toBe(false);
-  });
-
-  it('should not disable any toggles in manual mode', () => {
-    // Arrange
-    const data_th_now = [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 90]];
-    const toggle_hum = { disabled: false, checked: false };
-    const toggle_wid = { disabled: false, checked: false };
-    sessionStorage.setItem('mode', 'true');
-
-    // Act
-    IsAbleHT(data_th_now);
-
-    // Assert
-    expect(toggle_hum.disabled).toBe(false);
-    expect(toggle_hum.checked).toBe(false);
-    expect(toggle_wid.disabled).toBe(false);
-    expect(toggle_wid.checked).toBe(false);
-  });
 });
