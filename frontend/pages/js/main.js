@@ -1,10 +1,12 @@
 var toggle_hum = document.getElementById("toggle_hum");
 var toggle_wid = document.getElementById("toggle_wid");
+var last_thum_open = document.getElementById("last_thum_open");
+var last_window_open = document.getElementById("last_window_open");
 Chart.defaults.global.legend.display = false;
 
-let T = sessionStorage.getItem("T") ||0;
-let H = sessionStorage.getItem("H")||999;
-let mode = sessionStorage.getItem("mode")|| false;
+let T = sessionStorage.getItem("T") || 0;
+let H = sessionStorage.getItem("H") || 999;
+let mode = sessionStorage.getItem("mode") || false;
 
 
 console.log("T = "+ T);
@@ -13,39 +15,57 @@ console.log("mode = "+ mode);
 const response_th = await fetch("http://localhost:5000/api/temp_hum/get-data?t=5M");
 var data_th = await response_th.json();
 var data_th_now = data_th.data;
-//console.log(data_th);
-current_data_t.innerText = data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[0]+':'+data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[1]+":"+data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[2];
-async function IsAbleHT(data_th_now) {
-    mode = sessionStorage.getItem("mode");
-    if (mode === null) {
-      mode = false;
+current_data_t.innerText =  data_th_now[0][0].split(' ')[1].split('.')[0].replace(/-/g, ':');
+if (mode == 'false'){
+    if (sessionStorage.getItem('T') < data_th_now[0][9]){
+            toggle_wid.disabled = false;
+            console.log("wid Is able")
+    }else{
+            toggle_wid.disabled = true;
+            toggle_wid.checked = false;
+            last_window_open.innerText =  data_th_now[0][0].split('.')[0].replace(/-/g, ':');
+            console.log("wid Is disable")
     }
+    if (sessionStorage.getItem('H') > data_th_now[0][10]){
+            toggle_hum.disabled = false;
+            console.log("hum Is able")
+    }else{
+            toggle_hum.disabled = true;
+            toggle_hum.checked = false;
+            last_thum_open.innerText =  data_th_now[0][0].split('.')[0].replace(/-/g, ':');
+            console.log("hum Is disable")
+    }
+}
+async function IsAbleHT() {
+    let mode = sessionStorage.getItem("mode") || false;
+    let T = sessionStorage.getItem("T") || 0;
+    let H = sessionStorage.getItem("H") || 999;
+    const response_th = await fetch("http://localhost:5000/api/temp_hum/get-data?t=5M");
+    var data_th = await response_th.json();
+    var data_th_now = data_th.data;
     if (mode == 'false'){
-        if (T < data_th_now[0][9]){
+        if (sessionStorage.getItem('T') < data_th_now[0][9]){
             toggle_wid.disabled = false;
             console.log("wid Is able")
         }else{
             toggle_wid.disabled = true;
             toggle_wid.checked = false;
-
             console.log("wid Is disable")
         }
-        if (H > data_th_now[0][10]){
+        if (sessionStorage.getItem('H') > data_th_now[0][10]){
             toggle_hum.disabled = false;
             console.log("hum Is able")
         }else{
             toggle_hum.disabled = true;
             toggle_hum.checked = false;
-
             console.log("hum Is disable")
         }
     }else{
         toggle_wid.disabled = false;
         toggle_hum.disabled = false;
-        return false;
     }
 }
-IsAbleHT(data_th_now)
+
 var ctx_t = document.getElementById('Chart_temp').getContext('2d');
 var myChart_temp = new Chart(ctx_t, {
     type: 'bar',
@@ -75,7 +95,7 @@ var myChart_temp = new Chart(ctx_t, {
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-current_data_h.innerText = data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[0]+':'+data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[1]+":"+data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[2];
+current_data_h.innerText =  data_th_now[0][0].split(' ')[1].split('.')[0].replace(/-/g, ':');
 
 
 var ctx_h = document.getElementById('Chart_hum').getContext('2d');
@@ -117,8 +137,8 @@ setInterval(async function() {
   let time = data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[0]+':'+data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[1]+":"+data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[2];
   current_data_h.innerText = time;
   current_data_t.innerText = time;
-  IsAbleHT(data_th_now)
-}, 15000);
+  IsAbleHT();
+}, 10000);
 ////////////////////////////////////////////////////////////////////////////////////////////////
 const response_hb = await fetch("http://localhost:5000/api/hum/get-data");
 var data_hb = await response_hb.json();
@@ -155,15 +175,17 @@ var myChart_hb = new Chart(ctx_hb, {
         }
     }
 });
+
 setInterval(async function() {
   const response_hb = await fetch("http://localhost:5000/api/hum/get-data");
   var data_hb = await response_hb.json();
   var data_hb_now = data_hb.data;
   current_data_hb.innerText = data_hb.data[0][0].split(' ')[1].split('.')[0].split('-')[0]+':'+data_hb.data[0][0].split(' ')[1].split('.')[0].split('-')[1]+":"+data_hb.data[0][0].split(' ')[1].split('.')[0].split('-')[2];
 
-  myChart_hb.data.datasets[0].data = [data_hb.data[0][1], data_hb.data[0][2], data_hb.data[0][3], data_hb.data[0][4], data_hb.data[0][5], data_hb.data[0][6], data_hb.data[0][7]];
+  myChart_hb.data.datasets[0].data = [data_hb_now[0][1], data_hb_now[0][2], data_hb_now[0][3], data_hb_now[0][4], data_hb_now[0][5], data_hb_now[0][6], data_hb_now[0][7]];
   myChart_hb.update();
-}, 150000);
+  IsAbleHT();
+}, 10000);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -229,7 +251,7 @@ switchElement_t.addEventListener("change", function() {
       }
     })
     .catch(error => console.error(error));
-
+    IsAbleHT();
 });
 
 
@@ -250,6 +272,7 @@ if (switchState_hum == "off") {
   }
 
 switchElement_hum.addEventListener("change", function() {
+
   if (switchState_hum == "off") {
     switchState_hum = "on";
     console.log(`TOTAL_HUM ${switchState_hum}`);
@@ -288,5 +311,5 @@ switchElement_hum.addEventListener("change", function() {
     })
     .catch(error => console.error(error));
   }
-
+  IsAbleHT();
 });

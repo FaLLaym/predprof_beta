@@ -1,16 +1,26 @@
 var toggle_hum = document.getElementById("toggle_hum");
 var toggle_wid = document.getElementById("toggle_wid");
-let mode = 'false';
-let data_values = new Array();
 var checkbox = document.getElementById("inpLock");
 var label = document.querySelector(".btn-lock");
 var txt = document.getElementById("emergency_text_header");
-var mode_storage = sessionStorage.getItem("mode");
+var mode = sessionStorage.getItem("mode")||false;
+var last_thum_open = document.getElementById("last_thum_open");
+var last_window_open = document.getElementById("last_window_open");
 
-
-if(mode_storage=='null'){
-    checkbox.checked = 'true';
-    mode = 'true';
+if(mode == 'true'){
+    var T = 0;
+    var H = 999;
+    var Hb = 999;
+    console.log("T: " + T + "  " + "H: " + H+ "  "+ "Hb: " + Hb );
+    console.log("emergency mode on");
+    txt.innerText = "EMERGENCY MODE";
+    document.body.className = 'body_emergency';
+    try{
+        IsAbleHT();
+    }catch{}
+    try{
+        IsAbleHb();
+    }catch{}
 }else{
     checkbox.checked = 'false';
     mode = 'false';
@@ -34,12 +44,18 @@ checkbox.addEventListener("change", function() {
   }else{
     document.body.className = 'body';
     txt.innerText = "";
-    mode = 'false'
+    mode = 'false';
     sessionStorage.setItem("mode",false);
+    try{
+        IsAbleHT();
+    }catch{}
+    try{
+        IsAbleHb();
+    }catch{}
     if (sessionStorage.getItem("T") != 0){
         T = sessionStorage.getItem("T");
         H = sessionStorage.getItem("H");
-        Hb = sessionStorage.getItem("H");
+        Hb = sessionStorage.getItem("Hb");
 
     }else{
         T = 0;
@@ -53,7 +69,7 @@ checkbox.addEventListener("change", function() {
 try{
     document.getElementById("input_data").addEventListener("submit", function(event) {
       event.preventDefault();
-      data_values = [];
+      var data_values = [];
       var T = document.getElementById("input_T").value;
       var H = document.getElementById("input_H").value;
       var Hb = document.getElementById("input_Hb").value;
@@ -62,10 +78,11 @@ try{
       sessionStorage.setItem("H", Hb);
       event.target.reset();
       console.log("T: " + T + "  " + "H: " + H+ "  "+ "Hb: " + Hb );
-       alert("Лимитеры успешно установлены");
+      alert("Лимитеры успешно установлены");
+
     });
-
-
+}catch{}
+try{
     //////////////////////
     const form = document.querySelector('.section-main_data');
 
@@ -73,7 +90,7 @@ try{
         event.preventDefault();
 
         const inputs = form.querySelectorAll('.input_data');
-        const data = [];
+        var data = [];
 
         for (const input of inputs) {
             console.log(parseInt(input.value));
@@ -96,13 +113,68 @@ try{
         })
           .then(response => {
             if (!response.ok) {
-              /*console.error("Failed to post data");*/
+                alert("Ой! У нас не получилось запиcать данные в бд. Попробуйте ещё раз.");
+                console.log('Данные не отправлены на сервер');
+            }else{
+                alert("Данные успешно запиcаны в бд");
+                console.log('Данные успешно отправлены на сервер');
             }
-            alert("Данные успешно запиcаны в бд");
-            console.log('Данные успешно отправлены на сервер');
+
           })
           .catch(eerror => console.error(error));
 
     });
-}catch{console.log('its wrong page')}
+}catch{}
 
+async function IsAbleHT() {
+    const response_th = await fetch("http://localhost:5000/api/temp_hum/get-data?t=5M");
+    var data_th = await response_th.json();
+    var data_th_now = data_th.data;
+    if (mode == 'false'){
+        if (sessionStorage.getItem('T') < data_th_now[0][9]){
+            toggle_wid.disabled = false;
+            console.log("wid Is able")
+        }else{
+            toggle_wid.disabled = true;
+            toggle_wid.checked = false;
+            last_window_open.innerText =  data_th_now[0][0].split('.')[0].replace(/-/g, ':');
+            console.log("wid Is disable")
+        }
+        if (sessionStorage.getItem('H') > data_th_now[0][10]){
+            toggle_hum.disabled = false;
+            console.log("hum Is able")
+        }else{
+            toggle_hum.disabled = true;
+            toggle_hum.checked = false;
+            last_thum_open.innerText =  data_th_now[0][0].split('.')[0].replace(/-/g, ':');
+            console.log("hum Is disable")
+        }
+    }else{
+        toggle_wid.disabled = false;
+        toggle_hum.disabled = false;
+    }
+}
+
+async function IsAbleHb(){
+    var mode = sessionStorage.getItem("mode")||false;
+    if(mode=='false'){
+        Hb = sessionStorage.getItem("Hb")||999;
+        console.log("Hb: "+Hb);
+        const response_hb = await fetch("http://localhost:5000/api/hum/get-data");
+        var data_hb = await response_hb.json();
+        var data_hb_now = data_hb.data;
+
+        switches.forEach((toggle, index) => {
+            const switchNumber = index + 1;
+            if(Hb>data_hb_now[0][switchNumber]){
+                toggle.checked = false;
+                toggle.disabled = true;
+            }
+
+        });
+    }else{
+       switches.forEach((toggle, index) => {
+            toggle.disabled = false;
+        });
+    }
+}

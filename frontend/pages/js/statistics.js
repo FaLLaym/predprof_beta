@@ -17,7 +17,6 @@ const toggleSwitch = async (switchNumber, toggleState) => {
 };
 
 const switches = document.querySelectorAll('.toggle');
-
 switches.forEach((toggle, index) => {
   toggle.addEventListener('change', (event) => {
     const switchNumber = index + 1;
