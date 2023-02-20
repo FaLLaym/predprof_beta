@@ -13,7 +13,6 @@ console.log("mode = "+ mode);
 const response_th = await fetch("http://localhost:5000/api/temp_hum/get-data?t=5M");
 var data_th = await response_th.json();
 var data_th_now = data_th.data;
-//console.log(data_th);
 current_data_t.innerText = data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[0]+':'+data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[1]+":"+data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[2];
 async function IsAbleHT(data_th_now) {
     mode = sessionStorage.getItem("mode");
@@ -45,7 +44,7 @@ async function IsAbleHT(data_th_now) {
         return false;
     }
 }
-IsAbleHT(data_th_now)
+IsAbleHT(data_th_now);
 var ctx_t = document.getElementById('Chart_temp').getContext('2d');
 var myChart_temp = new Chart(ctx_t, {
     type: 'bar',
@@ -117,8 +116,8 @@ setInterval(async function() {
   let time = data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[0]+':'+data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[1]+":"+data_th.data[0][0].split(' ')[1].split('.')[0].split('-')[2];
   current_data_h.innerText = time;
   current_data_t.innerText = time;
-  IsAbleHT(data_th_now)
-}, 15000);
+  IsAbleHT(data_th_now);
+}, 10000);
 ////////////////////////////////////////////////////////////////////////////////////////////////
 const response_hb = await fetch("http://localhost:5000/api/hum/get-data");
 var data_hb = await response_hb.json();
@@ -155,15 +154,16 @@ var myChart_hb = new Chart(ctx_hb, {
         }
     }
 });
+
 setInterval(async function() {
   const response_hb = await fetch("http://localhost:5000/api/hum/get-data");
   var data_hb = await response_hb.json();
   var data_hb_now = data_hb.data;
   current_data_hb.innerText = data_hb.data[0][0].split(' ')[1].split('.')[0].split('-')[0]+':'+data_hb.data[0][0].split(' ')[1].split('.')[0].split('-')[1]+":"+data_hb.data[0][0].split(' ')[1].split('.')[0].split('-')[2];
 
-  myChart_hb.data.datasets[0].data = [data_hb.data[0][1], data_hb.data[0][2], data_hb.data[0][3], data_hb.data[0][4], data_hb.data[0][5], data_hb.data[0][6], data_hb.data[0][7]];
+  myChart_hb.data.datasets[0].data = [data_hb_now[0][1], data_hb_now[0][2], data_hb_now[0][3], data_hb_now[0][4], data_hb_now[0][5], data_hb_now[0][6], data_hb_now[0][7]];
   myChart_hb.update();
-}, 150000);
+}, 10000);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
