@@ -17,7 +17,6 @@ const toggleSwitch = async (switchNumber, toggleState) => {
 };
 
 const switches = document.querySelectorAll('.toggle');
-
 switches.forEach((toggle, index) => {
   toggle.addEventListener('change', (event) => {
     const switchNumber = index + 1;
@@ -36,28 +35,3 @@ const setSwitchStates = async () => {
 };
 
 setSwitchStates();
-setInterval(async function() {
-    var mode = sessionStorage.getItem("mode")||false;
-    if(mode=='false'){
-        Hb = sessionStorage.getItem("Hb");
-        const response_hb = await fetch("http://localhost:5000/api/hum/get-data");
-        var data_hb = await response_hb.json();
-        var data_hb_now = data_hb.data;
-
-        switches.forEach((toggle, index) => {
-            const switchNumber = index + 1;
-            if(Hb<data_hb_now[0][switchNumber]){
-                target.checked = false;
-                target.disabled = true;
-            }
-
-        });
-    }else{
-       switches.forEach((toggle, index) => {
-            target.checked = false;
-            target.disabled = true;
-        });
-    }
-
-
-}, 1500);

@@ -4,7 +4,8 @@ var checkbox = document.getElementById("inpLock");
 var label = document.querySelector(".btn-lock");
 var txt = document.getElementById("emergency_text_header");
 var mode = sessionStorage.getItem("mode")||false;
-
+var last_thum_open = document.getElementById("last_thum_open");
+var last_window_open = document.getElementById("last_window_open");
 
 if(mode == 'true'){
     var T = 0;
@@ -17,7 +18,9 @@ if(mode == 'true'){
     try{
         IsAbleHT();
     }catch{}
-
+    try{
+        IsAbleHb();
+    }catch{}
 }else{
     checkbox.checked = 'false';
     mode = 'false';
@@ -46,6 +49,9 @@ checkbox.addEventListener("change", function() {
     try{
         IsAbleHT();
     }catch{}
+    try{
+        IsAbleHb();
+    }catch{}
     if (sessionStorage.getItem("T") != 0){
         T = sessionStorage.getItem("T");
         H = sessionStorage.getItem("H");
@@ -72,10 +78,11 @@ try{
       sessionStorage.setItem("H", Hb);
       event.target.reset();
       console.log("T: " + T + "  " + "H: " + H+ "  "+ "Hb: " + Hb );
-       alert("Лимитеры успешно установлены");
+      alert("Лимитеры успешно установлены");
+
     });
-
-
+}catch{}
+try{
     //////////////////////
     const form = document.querySelector('.section-main_data');
 
@@ -130,7 +137,7 @@ async function IsAbleHT() {
         }else{
             toggle_wid.disabled = true;
             toggle_wid.checked = false;
-
+            last_window_open.innerText =  data_th_now[0][0].split('.')[0].replace(/-/g, ':');
             console.log("wid Is disable")
         }
         if (sessionStorage.getItem('H') > data_th_now[0][10]){
@@ -139,11 +146,35 @@ async function IsAbleHT() {
         }else{
             toggle_hum.disabled = true;
             toggle_hum.checked = false;
-
+            last_thum_open.innerText =  data_th_now[0][0].split('.')[0].replace(/-/g, ':');
             console.log("hum Is disable")
         }
     }else{
         toggle_wid.disabled = false;
         toggle_hum.disabled = false;
+    }
+}
+
+async function IsAbleHb(){
+    var mode = sessionStorage.getItem("mode")||false;
+    if(mode=='false'){
+        Hb = sessionStorage.getItem("Hb")||999;
+        console.log("Hb: "+Hb);
+        const response_hb = await fetch("http://localhost:5000/api/hum/get-data");
+        var data_hb = await response_hb.json();
+        var data_hb_now = data_hb.data;
+
+        switches.forEach((toggle, index) => {
+            const switchNumber = index + 1;
+            if(Hb>data_hb_now[0][switchNumber]){
+                toggle.checked = false;
+                toggle.disabled = true;
+            }
+
+        });
+    }else{
+       switches.forEach((toggle, index) => {
+            toggle.disabled = false;
+        });
     }
 }
